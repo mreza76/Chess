@@ -11,7 +11,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Set<Move> GenerateMOves(Position CurrentPosition) {
+    public Set<Move> GenerateMoves(Position CurrentPosition) {
         return null;
     }
 

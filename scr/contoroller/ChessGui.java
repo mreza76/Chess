@@ -1,6 +1,8 @@
 package contoroller;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import netmork.NetworkConnection;
 
@@ -12,8 +14,12 @@ public class ChessGui extends Application{
     private NetworkConnection networkConnection;
     private ChessBoard chessBoard;
     @Override
-    public void start(Stage primaryStage) throws Exception {
-
+    public void start(Stage stage) throws Exception {
+        System.out.println("hello" );
+        chessBoard = new ChessBoard();
+        Pane pane = chessBoard.getGridPane();
+        Scene scene = new Scene(pane);
+        stage.setScene(scene);
+        stage.show();
     }
-
 }
