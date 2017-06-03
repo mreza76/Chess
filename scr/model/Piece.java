@@ -1,6 +1,7 @@
 package model;
 
 import javafx.scene.image.Image;
+import javafx.scene.paint.Paint;
 
 import java.util.Set;
 
@@ -44,7 +45,7 @@ public abstract class Piece {
     public void setImage(Image image) {
         this.image = image;
     }
-    public abstract Set<Move>GenerateMOves(Position CurrentPosition);
+    public abstract Set<Move>GenerateMoves(Position CurrentPosition);
 
     @Override
     public abstract String toString();
