@@ -7,6 +7,7 @@ import netmork.NetworkConnection;
 /**
  * Created by amirsaeed on 5/27/2017.
  */
+//it's just a test for mohammadreza safi
 public class ChessGui extends Application{
     private NetworkConnection networkConnection;
     private ChessBoard chessBoard;
