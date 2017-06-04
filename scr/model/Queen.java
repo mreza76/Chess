@@ -6,7 +6,7 @@ import java.util.Set;
  * Created by amirsaeed on 6/2/2017.
  */
 public class Queen extends Piece {
-    Queen(Player player, Position position) {
+    public Queen(Player player, Position position) {
         super(player, position);
     }
 

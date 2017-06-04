@@ -11,9 +11,11 @@ import java.util.Set;
 public abstract class Piece {
     private Player player;
     private Position position;
-    private int id;
     private Image image;
-    Piece(Player player, Position position){}
+    Piece(Player player, Position position){
+        this.player=player;
+        this.position=position;
+    }
 
     public Player getPlayer() {
         return player;
@@ -29,15 +31,6 @@ public abstract class Piece {
     public void setPosition(Position position) {
         this.position = position;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public Image getImage() {
         return image;
     }
@@ -48,5 +41,10 @@ public abstract class Piece {
     public abstract Set<Move>GenerateMoves(Position CurrentPosition);
 
     @Override
-    public abstract String toString();
+    public String toString() {
+        return "Piece{" +
+                "player=" + player.getName() +
+                ", position=" + position +
+                '}';
+    }
 }
