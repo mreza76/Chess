@@ -15,7 +15,6 @@ public class ChessGui extends Application{
     private ChessBoard chessBoard;
     @Override
     public void start(Stage stage) throws Exception {
-        System.out.println("hello" );
         chessBoard = new ChessBoard();
         Pane pane = chessBoard.getGridPane();
         Scene scene = new Scene(pane);

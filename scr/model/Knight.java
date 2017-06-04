@@ -6,7 +6,7 @@ import java.util.Set;
  * Created by amirsaeed on 6/2/2017.
  */
 public class Knight extends Piece {
-    Knight(Player player, Position position) {
+    public Knight(Player player, Position position) {
         super(player, position);
     }
 

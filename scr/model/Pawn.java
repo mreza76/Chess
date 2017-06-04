@@ -6,7 +6,7 @@ import java.util.Set;
  * Created by amirsaeed on 6/2/2017.
  */
 public class Pawn extends Piece {
-    Pawn(Player player, Position position) {
+    public Pawn(Player player, Position position) {
         super(player, position);
     }
 
