@@ -27,10 +27,10 @@ public class Tile {
         int raw = position.getRaw();
         int col = position.getCol();
         if ((raw+col)%2==0){
-            color=Color.WHITE;
+            color=Color.MOCCASIN;
         }
         else{
-            color=Color.BLACK;
+            color=Color.CHOCOLATE;
         }
         Background background = new Background(new BackgroundFill(color,  new CornerRadii(0), new Insets(0)));
         pane.setBackground(background);
@@ -40,9 +40,11 @@ public class Tile {
         return piece;
     }
     public void setPiece(Piece piece){
-        this.piece=piece;
-        Rectangle rectangle = new Rectangle();
-        rectangle.setFill(new ImagePattern(piece.getImage()));
+        try {
+            this.piece = piece;
+            Rectangle rectangle = new Rectangle();
+            rectangle.setFill(new ImagePattern(piece.getImage()));
+        }catch (Exception e){}
     }
     public void setPosition(Position position){
 

@@ -1,5 +1,7 @@
 package model;
 
+import javafx.scene.image.Image;
+
 import java.util.Set;
 
 /**
@@ -8,6 +10,7 @@ import java.util.Set;
 public class Queen extends Piece {
     public Queen(Player player, Position position) {
         super(player, position);
+
     }
 
     @Override
