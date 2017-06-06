@@ -10,7 +10,7 @@ import java.util.Set;
 public class Knight extends Piece {
     public Knight(Player player, Position position) {
         super(player, position);
-
+        setImage("file:scr\\view\\pieces\\knight"+player.getId()+".png");
     }
 
     @Override

@@ -3,6 +3,7 @@ package model;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -42,8 +43,7 @@ public class Tile {
     public void setPiece(Piece piece){
         try {
             this.piece = piece;
-            Rectangle rectangle = new Rectangle();
-            rectangle.setFill(new ImagePattern(piece.getImage()));
+            pane.getChildren().add(new ImageView(piece.getImage()));
         }catch (Exception e){}
     }
     public void setPosition(Position position){

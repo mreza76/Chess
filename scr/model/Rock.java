@@ -10,7 +10,7 @@ import java.util.Set;
 public class Rock extends Piece {
     public Rock(Player player, Position position) {
         super(player, position);
-
+        setImage("file:scr\\view\\pieces\\rock"+player.getId()+".png");
     }
 
     @Override

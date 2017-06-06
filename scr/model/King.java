@@ -10,7 +10,7 @@ import java.util.Set;
 public class King extends Piece {
     public King(Player player, Position position) {
         super(player, position);
-
+        setImage("file:scr\\view\\pieces\\king"+player.getId()+".png");
     }
 
     @Override

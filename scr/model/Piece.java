@@ -14,7 +14,6 @@ public abstract class Piece {
     private Image image;
     Piece(Player player, Position position){
         this.player=player;
-        player.setPiece(this);
         this.position=position;
 
     }
@@ -37,8 +36,8 @@ public abstract class Piece {
         return image;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImage(String path) {
+        this.image = new Image(path,60,60,false,false);
     }
     public abstract Set<Move>GenerateMoves(Position CurrentPosition);
 

@@ -10,7 +10,7 @@ import java.util.Set;
 public class Pawn extends Piece {
     public Pawn(Player player, Position position) {
         super(player, position);
-
+        setImage("file:scr\\view\\pieces\\pawn"+player.getId()+".png");
     }
 
     @Override

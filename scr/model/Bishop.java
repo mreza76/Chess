@@ -10,7 +10,7 @@ import java.util.Set;
 public class Bishop extends Piece {
     public Bishop(Player player, Position position) {
         super(player, position);
-
+        setImage("file:scr\\view\\pieces\\bishop"+player.getId()+".png");
     }
 
     @Override
