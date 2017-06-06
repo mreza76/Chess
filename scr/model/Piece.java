@@ -14,7 +14,9 @@ public abstract class Piece {
     private Image image;
     Piece(Player player, Position position){
         this.player=player;
+        player.setPiece(this);
         this.position=position;
+
     }
 
     public Player getPlayer() {
