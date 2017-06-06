@@ -13,13 +13,11 @@ import netmork.NetworkConnection;
 public class ChessGui extends Application{
     private NetworkConnection networkConnection;
     private ChessBoard chessBoard;
-    private Pane root;
     @Override
     public void start(Stage stage) throws Exception {
-        root=new Pane();
         chessBoard = new ChessBoard();
-        root.getChildren().add(chessBoard.getGridPane());
-        Scene scene = new Scene(root);
+        Pane pane = chessBoard.getGridPane();
+        Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.show();
     }

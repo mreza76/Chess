@@ -1,7 +1,5 @@
 package model;
 
-import javafx.scene.image.Image;
-
 import java.util.Set;
 
 /**
@@ -10,7 +8,6 @@ import java.util.Set;
 public class Bishop extends Piece {
     public Bishop(Player player, Position position) {
         super(player, position);
-
     }
 
     @Override
