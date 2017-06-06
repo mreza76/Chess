@@ -9,7 +9,7 @@ import netmork.NetworkConnection;
 /**
  * Created by amirsaeed on 5/27/2017.
  */
-//it's just a test for mohammadreza safi
+
 public class ChessGui extends Application{
     private NetworkConnection networkConnection;
     private ChessBoard chessBoard;
@@ -19,6 +19,7 @@ public class ChessGui extends Application{
         Pane pane = chessBoard.getGridPane();
         Scene scene = new Scene(pane);
         stage.setScene(scene);
+        stage.setTitle("Chess");
         stage.show();
     }
 }

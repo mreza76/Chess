@@ -2,17 +2,15 @@ package model;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.*;
-import javafx.scene.text.Font;
+import javafx.scene.shape.Rectangle;
 
-import java.time.Instant;
+import static javax.swing.text.StyleConstants.Background;
 
 /**
  * Created by amirsaeed on 6/2/2017.

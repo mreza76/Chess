@@ -12,7 +12,6 @@ import java.util.function.Consumer;
  * Created by amirsaeed on 6/2/2017.
  */
 public abstract class NetworkConnection extends Thread {
-    private Consumer<Serializable> onRecieveCallback;
 
     public NetworkConnection() {
     }

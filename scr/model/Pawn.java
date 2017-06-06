@@ -1,5 +1,8 @@
 package model;
 
+import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import java.util.Set;
 
 /**
