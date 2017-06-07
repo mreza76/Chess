@@ -17,7 +17,8 @@ public class Queen extends Piece {
 
     @Override
     public Set<Move> GenerateMoves(Position CurrentPosition) {
-        ArrayList<Move> availabelMoves=new ArrayList<>() ;
+        Set<Move> availabelMoves=new HashSet<>() ;
+
         //horizontal
         int i ;
         for (i=CurrentPosition.getRaw()+1;i<8;i++){
@@ -73,8 +74,7 @@ public class Queen extends Piece {
             i--;
             j--;
         }
-        Set<Move> alphaSet  = new HashSet<Move>(availabelMoves);
-        return alphaSet ;
+        return availabelMoves ;
     }
 
     @Override
