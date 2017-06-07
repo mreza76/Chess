@@ -1,8 +1,7 @@
 package model;
 
-import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
+import javafx.scene.image.Image;
+
 import java.util.Set;
 
 /**
@@ -11,6 +10,7 @@ import java.util.Set;
 public class Pawn extends Piece {
     public Pawn(Player player, Position position) {
         super(player, position);
+        setImage("file:scr\\view\\pieces\\pawn"+player.getId()+".png");
     }
 
     @Override

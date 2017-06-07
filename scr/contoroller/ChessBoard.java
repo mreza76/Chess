@@ -93,7 +93,7 @@ public class ChessBoard {
                 whitePositions.put(piece, position);
             else
                 blackPositions.put(piece, position);
-        tiles[piece.getPosition().getRaw()][piece.getPosition().getCol()].setPiece(piece);
+        tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
     }
     public Piece getPieceAt(int row, int col){
         return null;

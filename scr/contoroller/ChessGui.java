@@ -9,17 +9,18 @@ import netmork.NetworkConnection;
 /**
  * Created by amirsaeed on 5/27/2017.
  */
-
+//it's just a test for mohammadreza safi
 public class ChessGui extends Application{
     private NetworkConnection networkConnection;
     private ChessBoard chessBoard;
+    private Pane root;
     @Override
     public void start(Stage stage) throws Exception {
+        root=new Pane();
         chessBoard = new ChessBoard();
-        Pane pane = chessBoard.getGridPane();
-        Scene scene = new Scene(pane);
+        root.getChildren().add(chessBoard.getGridPane());
+        Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Chess");
         stage.show();
     }
 }
