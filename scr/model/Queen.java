@@ -26,7 +26,7 @@ public class Queen extends Piece {
             Move move=new Move(CurrentPosition,position) ;
             availabelMoves.add(move) ;
         }
-        for (i=CurrentPosition.getRaw()+1;i>=0;i--){
+        for (i=CurrentPosition.getRaw()-1;i>=0;i--){
             Position position=new Position(i,CurrentPosition.getCol()) ;
             Move move=new Move(CurrentPosition,position) ;
             availabelMoves.add(move) ;
@@ -34,12 +34,12 @@ public class Queen extends Piece {
         int j ;
         //vertical
         for (j=CurrentPosition.getCol()+1;j<8;j++){
-            Position position=new Position(j,CurrentPosition.getCol()) ;
+            Position position=new Position(CurrentPosition.getRaw(),j) ;
             Move move=new Move(CurrentPosition,position) ;
             availabelMoves.add(move) ;
         }
-        for (j=CurrentPosition.getCol()+1;j>=0;j--){
-            Position position=new Position(j,CurrentPosition.getCol()) ;
+        for (j=CurrentPosition.getCol()-1;j>=0;j--){
+            Position position=new Position(CurrentPosition.getRaw(),j) ;
             Move move=new Move(CurrentPosition,position) ;
             availabelMoves.add(move) ;
         }

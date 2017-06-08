@@ -2,6 +2,7 @@ package model;
 
 import javafx.scene.image.Image;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -15,7 +16,38 @@ public class Bishop extends Piece {
 
     @Override
     public Set<Move> GenerateMoves(Position CurrentPosition) {
-        return null;
+        Set<Move> availabelMoves=new HashSet<>() ;
+        int i=CurrentPosition.getRaw()+1 ;
+        int j=CurrentPosition.getCol()+1 ;
+        while (!(i>7)&&!(j>7)){
+            Position position=new Position(i,j) ;
+            Move move=new Move(CurrentPosition,position) ;
+            availabelMoves.add(move) ;
+            i++;
+            j++;
+        }
+        while (!(i>7)&&!(j<0)){
+            Position position=new Position(i,j) ;
+            Move move=new Move(CurrentPosition,position) ;
+            availabelMoves.add(move) ;
+            i++;
+            j--;
+        }
+        while (!(i<0)&&!(j>7)){
+            Position position=new Position(i,j) ;
+            Move move=new Move(CurrentPosition,position) ;
+            availabelMoves.add(move) ;
+            i--;
+            j++;
+        }
+        while (!(i<0)&&!(j<0)) {
+            Position position = new Position(i, j);
+            Move move = new Move(CurrentPosition, position);
+            availabelMoves.add(move);
+            i--;
+            j--;
+        }
+        return availabelMoves ;
     }
 
     @Override
