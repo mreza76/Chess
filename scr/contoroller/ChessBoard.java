@@ -116,10 +116,15 @@ public class ChessBoard {
             fclick= true;
     }
     public void secondclick(Tile tile){
-        if(tile==start){
-            start.unselected();
-            start=null;
+        if(tile!=start){
+            Piece piece= start.getPiece();
+            tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
+            piece.setPosition(tile.getPosition());
+            placePiece(piece,piece.getPosition());
         }
+        start.unselected();
+        //start.removepieice();
+        start=null;
     }
     public void removePiece(Piece piece){}
     //place piece in right position
