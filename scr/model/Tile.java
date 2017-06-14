@@ -25,6 +25,10 @@ public class Tile {
     private StackPane pane= new StackPane();
     private Background background;
     private boolean gotpiece;
+    public void Highlight(){
+        background=new Background(new BackgroundFill(Color.CORNFLOWERBLUE,  new CornerRadii(0), new Insets(0)));
+        pane.setBackground(background);
+    }
     public Tile(Position position){
         //set position
         this.position=position;
