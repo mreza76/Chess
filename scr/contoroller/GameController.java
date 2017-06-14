@@ -14,7 +14,9 @@ public class GameController {
     private ChessBoard chessBoard;
     private Piece selectedPiece;
     private Player currentPlayer;
-    GameController(ChessBoard chessBoard){}
+    GameController(ChessBoard chessBoard){
+        this.chessBoard=chessBoard;
+    }
     private void Castling(Piece p, Move m){}
     public boolean isInCheck(Player player){
         return false;
@@ -29,7 +31,7 @@ public class GameController {
     public void beginTurn(){}
     public void endTurn(){}
     public Set<Move> getMovesForPieceAt(Position position){
-        return null;
+        return chessBoard.getPieceAt(position.getCol(),position.getRaw()).GenerateMoves(position);
     }
     public void makeMove(Move move){}
     public void rollback(){}
