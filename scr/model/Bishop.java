@@ -9,6 +9,7 @@ import java.util.Set;
  * Created by amirsaeed on 6/2/2017.
  */
 public class Bishop extends Piece {
+    int i , j ;
     public Bishop(Player player, Position position) {
         super(player, position);
         setImage("file:scr\\view\\pieces\\bishop"+player.getId()+".png");
@@ -17,35 +18,45 @@ public class Bishop extends Piece {
     @Override
     public Set<Move> GenerateMoves(Position CurrentPosition) {
         Set<Move> availabelMoves=new HashSet<>() ;
-        int i=CurrentPosition.getRaw()+1 ;
-        int j=CurrentPosition.getCol()+1 ;
-        while (!(i>7)&&!(j>7)){
-            Position position=new Position(i,j) ;
-            Move move=new Move(CurrentPosition,position) ;
-            availabelMoves.add(move) ;
-            i++;
-            j++;
+        if(getPlayer().getId()==2) {
+            i=CurrentPosition.getRaw()+1 ;
+            j=CurrentPosition.getCol()+1 ;
+            while (!(i > 7) && !(j > 7)) {
+                Position position = new Position(j, i);
+                Move move = new Move(CurrentPosition, position);
+                availabelMoves.add(move);
+                i++;
+                j++;
+            }
+            i=CurrentPosition.getRaw()+1 ;
+            j=CurrentPosition.getCol()-1 ;
+            while (!(i > 7) && !(j < 0)) {
+                Position position = new Position(j, i);
+                Move move = new Move(CurrentPosition, position);
+                availabelMoves.add(move);
+                i++;
+                j--;
+            }
         }
-        while (!(i>7)&&!(j<0)){
-            Position position=new Position(i,j) ;
-            Move move=new Move(CurrentPosition,position) ;
-            availabelMoves.add(move) ;
-            i++;
-            j--;
-        }
-        while (!(i<0)&&!(j>7)){
-            Position position=new Position(i,j) ;
-            Move move=new Move(CurrentPosition,position) ;
-            availabelMoves.add(move) ;
-            i--;
-            j++;
-        }
-        while (!(i<0)&&!(j<0)) {
-            Position position = new Position(i, j);
-            Move move = new Move(CurrentPosition, position);
-            availabelMoves.add(move);
-            i--;
-            j--;
+        else {
+            i=CurrentPosition.getRaw()-1 ;
+            j=CurrentPosition.getCol()+1 ;
+            while (!(i < 0) && !(j > 7)) {
+                Position position = new Position(j, i);
+                Move move = new Move(CurrentPosition, position);
+                availabelMoves.add(move);
+                i--;
+                j++;
+            }
+            i=CurrentPosition.getRaw()-1 ;
+            j=CurrentPosition.getCol()-1 ;
+            while (!(i < 0) && !(j < 0)) {
+                Position position = new Position(j, i);
+                Move move = new Move(CurrentPosition, position);
+                availabelMoves.add(move);
+                i--;
+                j--;
+            }
         }
         return availabelMoves ;
     }
