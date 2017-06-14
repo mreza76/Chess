@@ -22,57 +22,68 @@ public class Queen extends Piece {
         //horizontal
         int i ;
         for (i=CurrentPosition.getRaw()+1;i<8;i++){
-            Position position=new Position(i,CurrentPosition.getCol()) ;
+            Position position=new Position(CurrentPosition.getCol(),i) ;
             Move move=new Move(CurrentPosition,position) ;
             availabelMoves.add(move) ;
         }
         for (i=CurrentPosition.getRaw()-1;i>=0;i--){
-            Position position=new Position(i,CurrentPosition.getCol()) ;
+            Position position=new Position(CurrentPosition.getCol(),i) ;
             Move move=new Move(CurrentPosition,position) ;
             availabelMoves.add(move) ;
         }
         int j ;
         //vertical
         for (j=CurrentPosition.getCol()+1;j<8;j++){
-            Position position=new Position(CurrentPosition.getRaw(),j) ;
+            Position position=new Position(j,CurrentPosition.getRaw()) ;
             Move move=new Move(CurrentPosition,position) ;
             availabelMoves.add(move) ;
         }
         for (j=CurrentPosition.getCol()-1;j>=0;j--){
-            Position position=new Position(CurrentPosition.getRaw(),j) ;
+            Position position=new Position(j,CurrentPosition.getRaw()) ;
             Move move=new Move(CurrentPosition,position) ;
             availabelMoves.add(move) ;
         }
         //skew
-        i=CurrentPosition.getRaw()+1 ;
-        j=CurrentPosition.getCol()+1 ;
-        while (!(i>7)&&!(j>7)){
-            Position position=new Position(i,j) ;
-            Move move=new Move(CurrentPosition,position) ;
-            availabelMoves.add(move) ;
-            i++;
-            j++;
+
+        if(getPlayer().getId()==2) {
+            i=CurrentPosition.getRaw()+1 ;
+            j=CurrentPosition.getCol()+1 ;
+            while (!(i > 7) && !(j > 7)) {
+                Position position = new Position(j, i);
+                Move move = new Move(CurrentPosition, position);
+                availabelMoves.add(move);
+                i++;
+                j++;
+            }
+            i=CurrentPosition.getRaw()+1 ;
+            j=CurrentPosition.getCol()-1 ;
+            while (!(i > 7) && !(j < 0)) {
+                Position position = new Position(j, i);
+                Move move = new Move(CurrentPosition, position);
+                availabelMoves.add(move);
+                i++;
+                j--;
+            }
         }
-        while (!(i>7)&&!(j<0)){
-            Position position=new Position(i,j) ;
-            Move move=new Move(CurrentPosition,position) ;
-            availabelMoves.add(move) ;
-            i++;
-            j--;
-        }
-        while (!(i<0)&&!(j>7)){
-            Position position=new Position(i,j) ;
-            Move move=new Move(CurrentPosition,position) ;
-            availabelMoves.add(move) ;
-            i--;
-            j++;
-        }
-        while (!(i<0)&&!(j<0)) {
-            Position position = new Position(i, j);
-            Move move = new Move(CurrentPosition, position);
-            availabelMoves.add(move);
-            i--;
-            j--;
+        else {
+            i=CurrentPosition.getRaw()-1 ;
+            j=CurrentPosition.getCol()+1 ;
+            while (!(i < 0) && !(j > 7)) {
+                Position position = new Position(j, i);
+                Move move = new Move(CurrentPosition, position);
+                availabelMoves.add(move);
+                i--;
+                j++;
+            }
+            i=CurrentPosition.getRaw()-1 ;
+            j=CurrentPosition.getCol()-1 ;
+            while (!(i < 0) && !(j < 0)) {
+                Position position = new Position(j, i);
+                Move move = new Move(CurrentPosition, position);
+                availabelMoves.add(move);
+                i--;
+                j--;
+            }
         }
         return availabelMoves ;
     }

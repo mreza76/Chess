@@ -35,6 +35,7 @@ public class ChessBoard {
         this.networkConnection=networkConnection;
     }
     ChessBoard(){
+        gameController=new GameController(this);
         whitePositions = new HashMap<>();
         blackPositions = new HashMap<>();
         //add tiles
@@ -111,6 +112,11 @@ public class ChessBoard {
         if (tile.isGotpiece()){
             start= tile;
             start.selected();
+            for (Move move : gameController.getMovesForPieceAt(tile.getPosition())) {
+                try {
+                    tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].Highlight();
+                }catch (Exception e){}
+            }
         }
         else
             fclick= true;
@@ -121,6 +127,11 @@ public class ChessBoard {
             tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
             piece.setPosition(tile.getPosition());
             placePiece(piece,piece.getPosition());
+        }
+        for (int raw = 0; raw < 8; raw++) {
+            for (int col = 0; col < 8; col++) {
+                tiles[col][raw].unselected();
+            }
         }
         start.unselected();
         //start.removepieice();
@@ -135,8 +146,8 @@ public class ChessBoard {
                 blackPositions.put(piece, position);
         tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
     }
-    public Piece getPieceAt(int row, int col){
-        return null;
+    public Piece getPieceAt(int col, int row){
+        return tiles[col][row].getPiece();
     }
     public void getUpdate(Move move,Piece piece){}
     public void replacePieceAt(Position pos, Piece newPiece){}

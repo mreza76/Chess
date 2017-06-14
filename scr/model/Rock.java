@@ -18,29 +18,31 @@ public class Rock extends Piece {
 
     @Override
     public Set<Move> GenerateMoves(Position CurrentPosition) {
+        Set<Move> availabelMoves=new HashSet<>() ;
         int i ;
-        Set<Move> availableMoves=new HashSet<>() ;
         for (i=CurrentPosition.getRaw()+1;i<8;i++){
-            Position position =new Position(i,CurrentPosition.getCol()) ;
+            Position position=new Position(CurrentPosition.getCol(),i) ;
             Move move=new Move(CurrentPosition,position) ;
-            availableMoves.add(move) ;
+            availabelMoves.add(move) ;
         }
         for (i=CurrentPosition.getRaw()-1;i>=0;i--){
-            Position position =new Position(i,CurrentPosition.getCol()) ;
+            Position position=new Position(CurrentPosition.getCol(),i) ;
             Move move=new Move(CurrentPosition,position) ;
-            availableMoves.add(move) ;
+            availabelMoves.add(move) ;
         }
-        for (i=CurrentPosition.getCol()+1;i<8;i++){
-            Position position =new Position(CurrentPosition.getRaw(),i) ;
+        int j ;
+        //vertical
+        for (j=CurrentPosition.getCol()+1;j<8;j++){
+            Position position=new Position(j,CurrentPosition.getRaw()) ;
             Move move=new Move(CurrentPosition,position) ;
-            availableMoves.add(move) ;
+            availabelMoves.add(move) ;
         }
-        for (i=CurrentPosition.getCol()-1;i>=0;i--){
-            Position position =new Position(CurrentPosition.getRaw(),i) ;
+        for (j=CurrentPosition.getCol()-1;j>=0;j--){
+            Position position=new Position(j,CurrentPosition.getRaw()) ;
             Move move=new Move(CurrentPosition,position) ;
-            availableMoves.add(move) ;
+            availabelMoves.add(move) ;
         }
-        return availableMoves ;
+        return availabelMoves ;
     }
 
     @Override

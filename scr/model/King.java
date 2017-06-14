@@ -1,7 +1,6 @@
 package model;
-
 import javafx.scene.image.Image;
-
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -14,8 +13,56 @@ public class King extends Piece {
     }
 
     @Override
-    public Set<Move> GenerateMoves(Position CurrentPosition) {
-        return null;
+    public Set<Move> GenerateMoves(Position CurrentPosition)
+    {
+        Set<Move> availabelMoves = new HashSet<>();
+
+        int y = CurrentPosition.getRaw();
+        int x = CurrentPosition.getCol();
+
+        if (x+1 < 8){
+            Position position = new Position(y,x+1);
+            Move move = new Move(CurrentPosition,position);
+            availabelMoves.add(move);
+        }
+        if (x-1 >=0){
+            Position position = new Position(y , x-1);
+            Move move = new Move(CurrentPosition,position);
+            availabelMoves.add(move);
+        }
+        if ( y+1 < 8){
+            Position position = new Position(y+1 ,x);
+            Move move = new Move(CurrentPosition,position);
+            availabelMoves.add(move);
+        }
+        if (y-1 >= 0){
+            Position position=new Position(y-1,x);
+            Move move = new Move(CurrentPosition,position);
+            availabelMoves.add(move);
+        }
+        if (y-1 >=0 && x-1 >= 0){
+            Position position = new Position(y-1,x-1);
+            Move move = new Move(CurrentPosition,position);
+            availabelMoves.add(move);
+        }
+        if (y+1 <8 && x-1 >=0){
+            Position position = new Position(y+1,x-1);
+            Move move = new Move(CurrentPosition,position);
+            availabelMoves.add(move);
+        }
+        if ( y-1 >=0 && x+1 <8){
+            Position position = new Position(y-1,x+1);
+            Move move = new Move(CurrentPosition,position);
+            availabelMoves.add(move);
+        }
+        if (y+1 <8 && x+1 <8){
+            Position position = new Position(y+1,x+1);
+            Move move = new Move(CurrentPosition,position);
+            availabelMoves.add(move);
+        }
+
+        return availabelMoves;
+
     }
 
     @Override

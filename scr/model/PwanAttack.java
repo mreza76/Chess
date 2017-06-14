@@ -10,4 +10,7 @@ public class PwanAttack extends Move{
     PwanAttack(Position startPosition, Position destinationPosition) {
         super(startPosition, destinationPosition);
     }
+
+    public PwanAttack() {
+    }
 }
