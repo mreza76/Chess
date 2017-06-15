@@ -105,7 +105,6 @@ public class ChessBoard {
                 firstclick(tile);
             }
             else{
-                fclick=true;
                 secondclick(tile);
             }
         };
@@ -132,9 +131,12 @@ public class ChessBoard {
                     if (move.getDestinationPosition().getRaw() == tile.getPosition().getRaw()) {
                         MovePiece(piece, move);
                         flag = true;
+                        System.out.println("yeeep");
                         break;
-                    }else
-                        fclick=false;
+                    }
+                }else {
+                    fclick = false;
+                    System.out.println("hey");
                 }
             }
         }else
@@ -145,8 +147,9 @@ public class ChessBoard {
                     tiles[col][raw].unselected();
                 }
             }
-            start.unselected();
+           // start.unselected();
             start=null;
+            fclick=true;
         }
 
     }
