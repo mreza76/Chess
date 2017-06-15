@@ -34,6 +34,8 @@ public class ChessBoard {
     public void setNetworkConnection(NetworkConnection networkConnection){
         this.networkConnection=networkConnection;
     }
+    Tile tile1=null ;
+    Tile tile2=null ;
     ChessBoard(){
         gameController=new GameController(this);
         whitePositions = new HashMap<>();

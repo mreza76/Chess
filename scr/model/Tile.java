@@ -29,6 +29,10 @@ public class Tile {
         background=new Background(new BackgroundFill(Color.CORNFLOWERBLUE,  new CornerRadii(0), new Insets(0)));
         pane.setBackground(background);
     }
+    public void HighlightAttack(){
+        background=new Background(new BackgroundFill(Color.RED,  new CornerRadii(0), new Insets(0)));
+        pane.setBackground(background);
+    }
     public Tile(Position position){
         //set position
         this.position=position;
