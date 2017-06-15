@@ -16,8 +16,8 @@ public class Knight extends Piece {
     public Set<Move> GenerateMoves(Position CurrentPosition) {
         Set<Move> availabelMoves = new HashSet<>() ;
 
-        int y = CurrentPosition.getRaw();
-        int x = CurrentPosition.getCol() ;
+        int y = CurrentPosition.getCol();
+        int x = CurrentPosition.getRaw();
 
         //...knight can move on eight place...//
 
