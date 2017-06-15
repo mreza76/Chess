@@ -21,6 +21,8 @@ import java.time.Instant;
 public class Tile {
     private Position position;
     private Color color;
+    private int width=80;
+    private int height=80;
     private Piece piece;
     private StackPane pane= new StackPane();
     private Background background;
@@ -80,7 +82,7 @@ public class Tile {
     }
     //get tile view
     public Node getPane() {
-        pane.getChildren().addAll(new Rectangle(100, 100, Color.TRANSPARENT));
+        pane.getChildren().addAll(new Rectangle(width, height, Color.TRANSPARENT));
         return pane;
     }
     //say if the tile got any piece in it or not
