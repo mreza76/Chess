@@ -6,7 +6,7 @@ package model;
 public class Move {
     private Position startPosition;
     private Position destinationPosition;
-    Move(Position startPosition,Position destinationPosition){
+    public Move(Position startPosition, Position destinationPosition){
         this.destinationPosition=destinationPosition;
         this.startPosition=startPosition;
     }
@@ -29,5 +29,8 @@ public class Move {
 
     public void setDestinationPosition(Position destinationPosition) {
         this.destinationPosition = destinationPosition;
+    }
+
+    public Move() {
     }
 }

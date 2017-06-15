@@ -19,4 +19,7 @@ public class Position {
         this.raw = raw;
         this.col = col;
     }
+
+    public Position() {
+    }
 }

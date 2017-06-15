@@ -34,6 +34,8 @@ public class ChessBoard {
     public void setNetworkConnection(NetworkConnection networkConnection){
         this.networkConnection=networkConnection;
     }
+    Tile tile1=null ;
+    Tile tile2=null ;
     ChessBoard(){
         gameController=new GameController(this);
         whitePositions = new HashMap<>();
@@ -103,39 +105,53 @@ public class ChessBoard {
                 firstclick(tile);
             }
             else{
-                fclick=true;
                 secondclick(tile);
             }
         };
     }
     public void firstclick(Tile tile){
-        if (tile.isGotpiece()){
+        if (tile.isGotpiece()&&start==null){
             start= tile;
             start.selected();
             for (Move move : gameController.getMovesForPieceAt(tile.getPosition())) {
-                try {
-                    tiles[move.getDestinationPosition().getRaw()][move.getDestinationPosition().getCol()].Highlight();
-                }catch (Exception e){}
+                    tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].Highlight();
             }
         }
         else
             fclick= true;
     }
     public void secondclick(Tile tile){
-        if(tile!=start){
-            Piece piece= start.getPiece();
-            tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
-            piece.setPosition(tile.getPosition());
-            placePiece(piece,piece.getPosition());
-        }
-        for (int raw = 0; raw < 8; raw++) {
-            for (int col = 0; col < 8; col++) {
-                tiles[col][raw].unselected();
+//        check if anything has change
+        boolean flag=false;
+        if(tile!=start) {
+            Piece piece = start.getPiece();
+//            check if move can be done or not
+            for (Move move : gameController.getMovesForPieceAt(start.getPosition())) {
+                if (move.getDestinationPosition().getCol() == tile.getPosition().getCol()) {
+                    if (move.getDestinationPosition().getRaw() == tile.getPosition().getRaw()) {
+                        MovePiece(piece, move);
+                        flag = true;
+                        System.out.println("yeeep");
+                        break;
+                    }
+                }else {
+                    fclick = false;
+                    System.out.println("hey");
+                }
             }
+        }else
+            flag=true;
+        if(flag==true){
+            for (int raw = 0; raw < 8; raw++) {
+                for (int col = 0; col < 8; col++) {
+                    tiles[col][raw].unselected();
+                }
+            }
+           // start.unselected();
+            start=null;
+            fclick=true;
         }
-        start.unselected();
-        //start.removepieice();
-        start=null;
+
     }
     public void removePiece(Piece piece){}
     //place piece in right position
@@ -154,7 +170,15 @@ public class ChessBoard {
     public ArrayList<Tile>MovesForPiece(){
         return null;
     }
-    public void MovePiece(Piece piece,Move move){}
+    public void MovePiece(Piece piece,Move move){
+        tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
+        piece.setPosition(move.getDestinationPosition());
+        if (piece.getPlayer().getId() == 1)
+            whitePositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
+        else
+            blackPositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
+        tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
+    }
     public void reset(){}
 
 }
