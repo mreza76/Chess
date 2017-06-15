@@ -131,12 +131,10 @@ public class ChessBoard {
                     if (move.getDestinationPosition().getRaw() == tile.getPosition().getRaw()) {
                         MovePiece(piece, move);
                         flag = true;
-                        System.out.println("yeeep");
                         break;
                     }
                 }else {
                     fclick = false;
-                    System.out.println("hey");
                 }
             }
         }else
@@ -153,7 +151,9 @@ public class ChessBoard {
         }
 
     }
-    public void removePiece(Piece piece){}
+    public void removePiece(Piece piece){
+        tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
+    }
     //place piece in right position
     public void placePiece(Piece piece, Position position){
             if (piece.getPlayer().getId() == 1)
@@ -166,12 +166,19 @@ public class ChessBoard {
         return tiles[col][row].getPiece();
     }
     public void getUpdate(Move move,Piece piece){}
-    public void replacePieceAt(Position pos, Piece newPiece){}
+    public void replacePieceAt(Position position, Piece newPiece){
+    }
     public ArrayList<Tile>MovesForPiece(){
         return null;
     }
+    public Tile getTileAt(Position position){
+        return tiles[position.getCol()][position.getRaw()];
+    }
     public void MovePiece(Piece piece,Move move){
         tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
+        if(getTileAt(move.getDestinationPosition()).getPiece()!=null){
+            removePiece(getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw()));
+        }
         piece.setPosition(move.getDestinationPosition());
         if (piece.getPlayer().getId() == 1)
             whitePositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());

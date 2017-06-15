@@ -49,17 +49,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ChessBoard.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ChessBoard.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scr/contoroller/ChessBoard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="436">
-              <caret line="151" column="24" lean-forward="false" selection-start-line="151" selection-start-column="24" selection-end-line="151" selection-end-column="24" />
-              <folding />
+            <state relative-caret-position="132">
+              <caret line="154" column="89" lean-forward="false" selection-start-line="154" selection-start-column="89" selection-end-line="154" selection-end-column="89" />
+              <folding>
+                <element signature="e#5866#5867#0" expanded="true" />
+                <element signature="e#5932#5933#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GameController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scr/contoroller/GameController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
@@ -72,7 +75,7 @@
       <file leaf-file-name="Piece.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scr/model/Piece.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
+            <state relative-caret-position="-42">
               <caret line="10" column="22" lean-forward="false" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
               <folding />
             </state>
@@ -82,22 +85,9 @@
       <file leaf-file-name="Tile.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scr/model/Tile.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="27" column="17" lean-forward="false" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
-              <folding>
-                <marker date="1497549154926" expanded="true" signature="1127:1556" ph="{...}" />
-                <marker date="1497549154926" expanded="false" signature="1584:1594" ph=" { " />
-                <marker date="1497549154926" expanded="false" signature="1607:1613" ph=" }" />
-                <marker date="1497549154926" expanded="true" signature="1652:1752" ph="{...}" />
-                <marker date="1497549154926" expanded="false" signature="1800:1810" ph=" { " />
-                <marker date="1497549154926" expanded="false" signature="1833:1839" ph=" }" />
-                <marker date="1497549154926" expanded="true" signature="1870:1933" ph="{...}" />
-                <marker date="1497549154926" expanded="true" signature="2013:2168" ph="{...}" />
-                <marker date="1497549154926" expanded="true" signature="2231:2376" ph="{...}" />
-                <marker date="1497549154926" expanded="false" signature="2410:2420" ph=" { " />
-                <marker date="1497549154926" expanded="false" signature="2436:2442" ph=" }" />
-                <marker date="1497549154926" expanded="true" signature="2678:2803" ph="{...}" />
-              </folding>
+            <state relative-caret-position="210">
+              <caret line="23" column="23" lean-forward="false" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -151,6 +141,7 @@
         <option value="$PROJECT_DIR$/scr/model/Bishop.java" />
         <option value="$PROJECT_DIR$/scr/model/Rock.java" />
         <option value="$PROJECT_DIR$/scr/contoroller/ChessBoard.java" />
+        <option value="$PROJECT_DIR$/scr/model/Tile.java" />
       </list>
     </option>
   </component>
@@ -181,9 +172,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -710,11 +701,14 @@
       <workItem from="1497438310994" duration="9607000" />
       <workItem from="1497524143545" duration="314000" />
       <workItem from="1497549258908" duration="619000" />
+      <workItem from="1497551477128" duration="101000" />
+      <workItem from="1497551626773" duration="128000" />
+      <workItem from="1497551869687" duration="1041000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17054000" />
+    <option name="totallyTimeSpent" value="18324000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -767,19 +761,14 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/scr/model/Rock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scr/contoroller/ChessBoard.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#5866#5867#0" expanded="true" />
+            <element signature="e#5932#5933#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -804,20 +793,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
           <caret line="27" column="17" lean-forward="false" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
-          <folding>
-            <marker date="1497549154926" expanded="true" signature="1127:1556" ph="{...}" />
-            <marker date="1497549154926" expanded="false" signature="1584:1594" ph=" { " />
-            <marker date="1497549154926" expanded="false" signature="1607:1613" ph=" }" />
-            <marker date="1497549154926" expanded="true" signature="1652:1752" ph="{...}" />
-            <marker date="1497549154926" expanded="false" signature="1800:1810" ph=" { " />
-            <marker date="1497549154926" expanded="false" signature="1833:1839" ph=" }" />
-            <marker date="1497549154926" expanded="true" signature="1870:1933" ph="{...}" />
-            <marker date="1497549154926" expanded="true" signature="2013:2168" ph="{...}" />
-            <marker date="1497549154926" expanded="true" signature="2231:2376" ph="{...}" />
-            <marker date="1497549154926" expanded="false" signature="2410:2420" ph=" { " />
-            <marker date="1497549154926" expanded="false" signature="2436:2442" ph=" }" />
-            <marker date="1497549154926" expanded="true" signature="2678:2803" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -871,7 +847,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#5866#5867#0" expanded="true" />
+            <element signature="e#5932#5933#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -896,20 +875,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="27" column="17" lean-forward="false" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
-          <folding>
-            <marker date="1497549154926" expanded="true" signature="1127:1556" ph="{...}" />
-            <marker date="1497549154926" expanded="false" signature="1584:1594" ph=" { " />
-            <marker date="1497549154926" expanded="false" signature="1607:1613" ph=" }" />
-            <marker date="1497549154926" expanded="true" signature="1652:1752" ph="{...}" />
-            <marker date="1497549154926" expanded="false" signature="1800:1810" ph=" { " />
-            <marker date="1497549154926" expanded="false" signature="1833:1839" ph=" }" />
-            <marker date="1497549154926" expanded="true" signature="1870:1933" ph="{...}" />
-            <marker date="1497549154926" expanded="true" signature="2013:2168" ph="{...}" />
-            <marker date="1497549154926" expanded="true" signature="2231:2376" ph="{...}" />
-            <marker date="1497549154926" expanded="false" signature="2410:2420" ph=" { " />
-            <marker date="1497549154926" expanded="false" signature="2436:2442" ph=" }" />
-            <marker date="1497549154926" expanded="true" signature="2678:2803" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -947,7 +913,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="819">
           <caret line="39" column="59" lean-forward="false" selection-start-line="39" selection-start-column="59" selection-end-line="39" selection-end-column="59" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -963,7 +928,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="14" lean-forward="false" selection-start-line="0" selection-start-column="14" selection-end-line="0" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -987,7 +951,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="14" lean-forward="false" selection-start-line="0" selection-start-column="14" selection-end-line="0" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -995,7 +958,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="819">
           <caret line="39" column="59" lean-forward="false" selection-start-line="39" selection-start-column="59" selection-end-line="39" selection-end-column="59" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1011,7 +973,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="14" lean-forward="false" selection-start-line="0" selection-start-column="14" selection-end-line="0" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1019,7 +980,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
           <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1035,7 +995,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1043,7 +1002,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1066,7 +1024,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="441">
           <caret line="34" column="5" lean-forward="false" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1081,14 +1038,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="19" column="50" lean-forward="false" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scr/model/Rock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="882">
-          <caret line="47" column="5" lean-forward="false" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -1142,32 +1091,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scr/model/Tile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="27" column="17" lean-forward="false" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
-          <folding>
-            <marker date="1497549154926" expanded="true" signature="1127:1556" ph="{...}" />
-            <marker date="1497549154926" expanded="false" signature="1584:1594" ph=" { " />
-            <marker date="1497549154926" expanded="false" signature="1607:1613" ph=" }" />
-            <marker date="1497549154926" expanded="true" signature="1652:1752" ph="{...}" />
-            <marker date="1497549154926" expanded="false" signature="1800:1810" ph=" { " />
-            <marker date="1497549154926" expanded="false" signature="1833:1839" ph=" }" />
-            <marker date="1497549154926" expanded="true" signature="1870:1933" ph="{...}" />
-            <marker date="1497549154926" expanded="true" signature="2013:2168" ph="{...}" />
-            <marker date="1497549154926" expanded="true" signature="2231:2376" ph="{...}" />
-            <marker date="1497549154926" expanded="false" signature="2410:2420" ph=" { " />
-            <marker date="1497549154926" expanded="false" signature="2436:2442" ph=" }" />
-            <marker date="1497549154926" expanded="true" signature="2678:2803" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scr/model/Knight.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="19" column="50" lean-forward="false" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1175,7 +1102,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="882">
           <caret line="47" column="5" lean-forward="false" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1183,6 +1109,44 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1323">
           <caret line="68" column="0" lean-forward="false" selection-start-line="58" selection-start-column="13" selection-end-line="68" selection-end-column="0" />
+          <folding>
+            <element signature="e#5866#5867#0" expanded="true" />
+            <element signature="e#5932#5933#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scr/contoroller/ChessBoard.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="154" column="89" lean-forward="false" selection-start-line="154" selection-start-column="89" selection-end-line="154" selection-end-column="89" />
+          <folding>
+            <element signature="e#5866#5867#0" expanded="true" />
+            <element signature="e#5932#5933#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scr/model/Piece.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-42">
+          <caret line="10" column="22" lean-forward="false" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scr/model/Rock.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="882">
+          <caret line="47" column="5" lean-forward="false" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scr/model/Tile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="23" column="23" lean-forward="false" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
           <folding />
         </state>
       </provider>
@@ -1191,14 +1155,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scr/contoroller/ChessBoard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="436">
-          <caret line="151" column="24" lean-forward="false" selection-start-line="151" selection-start-column="24" selection-end-line="151" selection-end-column="24" />
           <folding />
         </state>
       </provider>
