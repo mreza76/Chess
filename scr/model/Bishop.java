@@ -18,7 +18,8 @@ public class Bishop extends Piece {
     @Override
     public Set<Move> GenerateMoves(Position CurrentPosition) {
         Set<Move> availabelMoves=new HashSet<>() ;
-        if(getPlayer().getId()==2) {
+
+
             i=CurrentPosition.getRaw()+1 ;
             j=CurrentPosition.getCol()+1 ;
             while (!(i > 7) && !(j > 7)) {
@@ -37,8 +38,7 @@ public class Bishop extends Piece {
                 i++;
                 j--;
             }
-        }
-        else {
+
             i=CurrentPosition.getRaw()-1 ;
             j=CurrentPosition.getCol()+1 ;
             while (!(i < 0) && !(j > 7)) {
@@ -48,6 +48,7 @@ public class Bishop extends Piece {
                 i--;
                 j++;
             }
+
             i=CurrentPosition.getRaw()-1 ;
             j=CurrentPosition.getCol()-1 ;
             while (!(i < 0) && !(j < 0)) {
@@ -57,7 +58,7 @@ public class Bishop extends Piece {
                 i--;
                 j--;
             }
-        }
+
         return availabelMoves ;
     }
 
