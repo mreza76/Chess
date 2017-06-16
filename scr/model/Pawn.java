@@ -1,10 +1,8 @@
 package model;
-
 import javafx.scene.image.Image;
 
 import java.util.HashSet;
 import java.util.Set;
-
 /**
  * Created by amirsaeed on 6/2/2017.
  */
@@ -12,6 +10,7 @@ public class Pawn extends Piece {
     Position position=new Position() ;
     Move move=new Move() ;
     PwanAttack pwanAttack=new PwanAttack() ;
+
     public Pawn(Player player, Position position) {
         super(player, position);
         setImage("file:scr\\view\\pieces\\pawn"+player.getId()+".png");
@@ -24,24 +23,24 @@ public class Pawn extends Piece {
         //Moves
 
         if(getPlayer().getId()==2) {
-            if (CurrentPosition.getRaw()+1 <8){
+            if (CurrentPosition.getRaw()+1 < 8){
             position = new Position(CurrentPosition.getCol(),CurrentPosition.getRaw()+1 );
             move = new Move(CurrentPosition, position);
             availbaleMoves.add(move);
             }
-            if (CurrentPosition.getCol()+2 <8){
+            if (CurrentPosition.getRaw() == 1){
             position = new Position(CurrentPosition.getCol(),CurrentPosition.getRaw()+2 );
             move = new Move(CurrentPosition, position);
             availbaleMoves.add(move);
             }
         }
         else {
-            if (CurrentPosition.getRaw()-1 >=0){
+            if (CurrentPosition.getRaw()-1 >= 0){
             position = new Position(CurrentPosition.getCol(),CurrentPosition.getRaw()-1 );
             move = new Move(CurrentPosition, position);
             availbaleMoves.add(move);
             }
-            if (CurrentPosition.getRaw()-2 >=0){
+            if (CurrentPosition.getRaw() == 6 ){
             position = new Position(CurrentPosition.getCol(),CurrentPosition.getRaw()-2 );
             move = new Move(CurrentPosition, position);
             availbaleMoves.add(move);
@@ -66,7 +65,8 @@ public class Pawn extends Piece {
             if (CurrentPosition.getCol()+1 < 8 && CurrentPosition.getRaw()+1 < 8){
             position = new Position(CurrentPosition.getCol() + 1, CurrentPosition.getRaw() + 1);
             pwanAttack = new PwanAttack(CurrentPosition, position);
-            availbaleMoves.add(pwanAttack);}
+            availbaleMoves.add(pwanAttack);
+            }
             if (CurrentPosition.getRaw()+1 <8 && CurrentPosition.getCol()-1 >= 0) {
                 position = new Position(CurrentPosition.getCol() - 1, CurrentPosition.getRaw() + 1);
                 pwanAttack = new PwanAttack(CurrentPosition, position);
@@ -75,7 +75,6 @@ public class Pawn extends Piece {
         }
         return availbaleMoves ;
     }
-
     @Override
     public String toString() {
         return null;
