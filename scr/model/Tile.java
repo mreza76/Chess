@@ -27,6 +27,7 @@ public class Tile {
     private StackPane pane= new StackPane();
     private Background background;
     private boolean gotpiece;
+    private Rectangle rectangle;
     public void Highlight(){
         background=new Background(new BackgroundFill(Color.CORNFLOWERBLUE,  new CornerRadii(0), new Insets(0)));
         pane.setBackground(background);
@@ -37,6 +38,9 @@ public class Tile {
     }
     public Tile(Position position){
         //set position
+        rectangle= new Rectangle(width,height);
+        rectangle.setHeight(50);
+        rectangle.setWidth(50);
         this.position=position;
         int raw = position.getRaw();
         int col = position.getCol();
@@ -48,7 +52,9 @@ public class Tile {
             color=Color.CHOCOLATE;
         }
         background = new Background(new BackgroundFill(color,  new CornerRadii(0), new Insets(0)));
+        rectangle.setFill(Color.TRANSPARENT);
         pane.setBackground(background);
+        pane.getChildren().add(rectangle);
 
     }
     public Piece getPiece(){
@@ -57,14 +63,16 @@ public class Tile {
 
     public void setPiece(Piece piece){
         this.piece = piece;
-        pane.getChildren().add(new ImageView(piece.getImage()));
+//        pane.getChildren().add(new ImageView(piece.getImage()));
+        rectangle.setFill(new ImagePattern(piece.getImage()));
     }
 
     public void setPosition(Position position){
         this.position=position;
     }
     public void removepieice(){
-        pane.getChildren().clear();
+//        pane.getChildren().clear();
+        rectangle.setFill(Color.TRANSPARENT);
         piece=null;
     }
     //change the color of tile when tile is selected
