@@ -145,7 +145,6 @@ public class ChessBoard {
                     tiles[col][raw].unselected();
                 }
             }
-           // start.unselected();
             start=null;
             fclick=true;
         }

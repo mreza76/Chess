@@ -41,7 +41,7 @@ public class Tile {
         int raw = position.getRaw();
         int col = position.getCol();
         //set color
-        if ((raw+col)%2==0){
+        if ((raw+col)%2==1){
             color=Color.MOCCASIN;
         }
         else{

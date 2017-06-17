@@ -13,13 +13,14 @@ import java.util.function.Consumer;
  */
 public abstract class NetworkConnection extends Thread {
     private Consumer<Serializable> onRecieveCallback;
-
     public NetworkConnection() {
     }
     public void startConnection() throws Exception {
         start();
     }
-    public void send(String data) {}
+    public void send(String data) {
+
+    }
     public void get(String data){}
     public void closeConnection() throws Exception {
     }
