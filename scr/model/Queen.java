@@ -43,9 +43,8 @@ public class Queen extends Piece {
             Move move=new Move(CurrentPosition,position) ;
             availabelMoves.add(move) ;
         }
-        //skew
+        // skew
 
-        if(getPlayer().getId()==2) {
             i=CurrentPosition.getRaw()+1 ;
             j=CurrentPosition.getCol()+1 ;
             while (!(i > 7) && !(j > 7)) {
@@ -64,8 +63,6 @@ public class Queen extends Piece {
                 i++;
                 j--;
             }
-        }
-        else {
             i=CurrentPosition.getRaw()-1 ;
             j=CurrentPosition.getCol()+1 ;
             while (!(i < 0) && !(j > 7)) {
@@ -84,10 +81,8 @@ public class Queen extends Piece {
                 i--;
                 j--;
             }
-        }
         return availabelMoves ;
     }
-
     @Override
     public String toString() {
         return null;

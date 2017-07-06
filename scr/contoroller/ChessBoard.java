@@ -1,5 +1,4 @@
 package contoroller;
-
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -21,6 +20,7 @@ public class ChessBoard {
     public GridPane getGridPane() {
         return gridPane;
     }
+    public int shift = 0 ;
 
     private Tile[][]tiles;
     private boolean fclick=true;
@@ -100,46 +100,66 @@ public class ChessBoard {
     //it will be called every time ,any time mouse clicked
     public EventHandler<? super MouseEvent> tileListener(Tile tile) {
         return event -> {
-            if(fclick){
+
+            if(fclick == true){
                 fclick=false;
                 firstclick(tile);
             }
             else{
-                fclick=true;
                 secondclick(tile);
+
             }
         };
     }
     public void firstclick(Tile tile){
-        if (tile.isGotpiece()){
+        if (tile.isGotpiece()&&start==null){
             start= tile;
             start.selected();
             for (Move move : gameController.getMovesForPieceAt(tile.getPosition())) {
-                try {
                     tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].Highlight();
-                }catch (Exception e){}
             }
         }
         else
             fclick= true;
     }
     public void secondclick(Tile tile){
-        if(tile!=start){
-            Piece piece= start.getPiece();
-            tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
-            piece.setPosition(tile.getPosition());
-            placePiece(piece,piece.getPosition());
-        }
-        for (int raw = 0; raw < 8; raw++) {
-            for (int col = 0; col < 8; col++) {
-                tiles[col][raw].unselected();
+//        check if anything has change
+        boolean flag=false;
+        if(tile!=start) {
+            Piece piece = start.getPiece();
+//            check if move can be done or not
+                shift =( shift %2)+1 ;
+                if (piece.getPlayer().getId() ==shift) {
+                    System.out.println("Now player "+((shift%2)+1));
+                    for (Move move : gameController.getMovesForPieceAt(start.getPosition())) {
+                        if (move.getDestinationPosition().getCol() == tile.getPosition().getCol()) {
+                            if (move.getDestinationPosition().getRaw() == tile.getPosition().getRaw()) {
+                                MovePiece(piece, move);
+                                flag = true;
+                                break;
+                            }
+
+                        } else {
+                            fclick = false;
+                        }
+                    }
+                }else shift =( shift %2)+1 ;
+        }else
+            flag=true;
+        if(flag==true){
+            for (int raw = 0; raw < 8; raw++) {
+                for (int col = 0; col < 8; col++) {
+                    tiles[col][raw].unselected();
+                }
             }
+            start=null;
+            fclick=true;
         }
-        start.unselected();
-        //start.removepieice();
-        start=null;
+
     }
-    public void removePiece(Piece piece){}
+    public void removePiece(Piece piece){
+        tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
+    }
     //place piece in right position
     public void placePiece(Piece piece, Position position){
             if (piece.getPlayer().getId() == 1)
@@ -152,11 +172,40 @@ public class ChessBoard {
         return tiles[col][row].getPiece();
     }
     public void getUpdate(Move move,Piece piece){}
-    public void replacePieceAt(Position pos, Piece newPiece){}
+    public void replacePieceAt(Position position, Piece newPiece){
+    }
     public ArrayList<Tile>MovesForPiece(){
         return null;
     }
-    public void MovePiece(Piece piece,Move move){}
+    public Tile getTileAt(Position position){
+        return tiles[position.getCol()][position.getRaw()];
+    }
+
+    public void MovePiece(Piece piece,Move move){
+        tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
+        if(getTileAt(move.getDestinationPosition()).getPiece()!=null){
+            removePiece(getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw()));
+        }
+        piece.setPosition(move.getDestinationPosition());
+        if (piece.getPlayer().getId() == 1)
+            whitePositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
+        else
+            blackPositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
+        tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
+        if (piece instanceof Pawn){
+            piece=gameController.pawnconvert(piece);
+            tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
+            if(getTileAt(move.getDestinationPosition()).getPiece()!=null){
+                removePiece(getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw()));
+            }
+            piece.setPosition(move.getDestinationPosition());
+            if (piece.getPlayer().getId() == 1)
+                whitePositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
+            else
+                blackPositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
+            tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
+        }
+    }
     public void reset(){}
 
 }

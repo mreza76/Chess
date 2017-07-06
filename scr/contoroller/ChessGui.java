@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import netmork.NetworkConnection;
+import netmork.Server;
 
 /**
  * Created by amirsaeed on 5/27/2017.
@@ -16,6 +17,7 @@ public class ChessGui extends Application{
     private Pane root;
     @Override
     public void start(Stage stage) throws Exception {
+
         root=new Pane();
         chessBoard = new ChessBoard();
         root.getChildren().add(chessBoard.getGridPane());
