@@ -184,6 +184,11 @@ public class ChessBoard {
         else
             blackPositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
         tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
+        if (piece instanceof Pawn){
+            Piece piece1=gameController.pawnconvert(piece);
+            tiles[piece1.getPosition().getCol()][piece1.getPosition().getRaw()].removepieice();
+            tiles[piece1.getPosition().getCol()][piece1.getPosition().getRaw()].setPiece(piece1);
+        }
     }
     public void reset(){}
 

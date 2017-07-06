@@ -58,7 +58,12 @@ public class Tile {
 
     }
     public Piece getPiece(){
-        return piece;
+        try {
+            return piece;
+        }catch (NullPointerException e){
+            return null ;
+        }
+
     }
 
     public void setPiece(Piece piece){
