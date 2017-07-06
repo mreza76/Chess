@@ -36,13 +36,10 @@ public abstract class NetworkConnection extends Thread {
         while (data==null){
             System.out.println("wait for move");
         }
-        System.out.println("yesss");
         try {
-            System.out.println("sending move");
             outputStream=socket.getOutputStream();
             outputStream.write(data.getBytes());
             System.out.println(data);
-            System.out.println("sent");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,14 +68,12 @@ public abstract class NetworkConnection extends Thread {
     public void run() {
         while (socket.isConnected()){
             if(isServer()){
-                System.out.println("hey");
                 send();
                 get();
             }
             else{
                 get();
                 send();
-                System.out.println("yess");
             }
         }
     }

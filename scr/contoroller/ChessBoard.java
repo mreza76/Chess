@@ -27,12 +27,17 @@ public class ChessBoard {
     private GameController gameController;
     private Map<Piece, Position> whitePositions;
     private Map<Piece, Position> blackPositions;
-
+    public Player getplayer(int player){
+        if (player==1)
+            return white;
+        else
+            return black;
+    }
     public GameController getGameController() {
         return gameController;
     }
     public void setGameController() {
-        this.gameController = new GameController(this,white);;
+        this.gameController = new GameController(this,white);
     }
     public void setMode(boolean OfflineMode){
         gameController.setIsofline(OfflineMode);
@@ -125,16 +130,19 @@ public class ChessBoard {
         };
     }
     public void firstclick(Tile tile){
-        if (tile.isGotpiece()&&start==null){
-            start= tile;
-            start.selected();
-            for (Move move : gameController.getMovesForPieceAt(tile.getPosition())) {
+        Piece piece=getPieceAt(tile.getPosition().getCol(),tile.getPosition().getRaw());
+        if (gameController.checkTurn(piece)) {
+            if (tile.isGotpiece() && start == null) {
+                start = tile;
+                start.selected();
+                for (Move move : gameController.getMovesForPieceAt(tile.getPosition())) {
                     tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].Highlight();
-                    if(tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].isGotpiece()){
-                        if(tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].getPiece().getPlayer().getId()!=tiles[move.getStartPosition().getCol()][move.getStartPosition().getRaw()].getPiece().getPlayer().getId()){
+                    if (tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].isGotpiece()) {
+                        if (tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].getPiece().getPlayer().getId() != tiles[move.getStartPosition().getCol()][move.getStartPosition().getRaw()].getPiece().getPlayer().getId()) {
                             tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].HighlightAttack();
                         }
                     }
+                }
             }
         }
         else
@@ -234,10 +242,9 @@ public class ChessBoard {
                 blackPositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
             tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
         }
-        //System.out.println(move.toString());
-        if(!gameController.isIsofline())
+        gameController.changeTurn();
+        if(!gameController.getIsofline())
             sendupdate(move);
-        //        gameController.endTurn();
     }
     public void reset(){}
 

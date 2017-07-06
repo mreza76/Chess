@@ -8,13 +8,23 @@ import java.util.List;
 import java.util.Set;
 
 public class GameController {
-
+    private int turn=1;
     private ArrayList<Move> moves=new ArrayList<>();
     private ChessBoard chessBoard;
     private Piece selectedPiece;
-    private boolean isofline=true;
+    private boolean isofline=false;
+    private Player currentPlayer;
 
-    public boolean isIsofline() {
+    public boolean checkTurn(Piece piece){
+        if(piece.getPlayer().getId()==getCurrentPlayer().getId()){
+            if(isofline)
+                return true;
+            else if(getCurrentPlayer().getId()==turn)
+                return true;
+        }
+         return false;
+    }
+    public boolean getIsofline() {
         return isofline;
     }
 
@@ -22,12 +32,15 @@ public class GameController {
         this.isofline = isofline;
     }
 
-    private Player currentPlayer;
     GameController(ChessBoard chessBoard,Player player){
         this.chessBoard=chessBoard;
         currentPlayer=player;
-//        startGame();
     }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
     private void Castling(Piece p, Move m){}
     public boolean isInCheck(Player player){
         return false;
@@ -35,19 +48,22 @@ public class GameController {
     public boolean isGameOver(){
         return false;
     }
-    public void startGame(){
-        if (currentPlayer.getId()==1)
-            beginTurn();
-        else
-            endTurn();
-    }
-    public void beginTurn(){
-        chessBoard.setfclick(true);
-    }
-    public void endTurn(){
-        chessBoard.setfclick(false);
-//        chessBoard.getUpdate();
-        beginTurn();
+//    public void startGame(){
+//        if (currentPlayer.getId()==1)
+//
+//    }
+    public void changeTurn(){
+        if(isofline) {
+            if (currentPlayer.getId() == 1)
+                currentPlayer = chessBoard.getplayer(2);
+            else
+                currentPlayer = chessBoard.getplayer(1);
+        }else{
+            if(turn==1)
+                turn=2;
+            else
+                turn=1;
+        }
     }
     public Piece pawnconvert(Piece piece){
         Position current =piece.getPosition();
