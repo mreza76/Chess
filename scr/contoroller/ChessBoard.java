@@ -13,14 +13,14 @@ import java.util.Map;
  * Created by amirsaeed on 6/2/2017.
  */
 public class ChessBoard {
-    private Player[] players;
+    private Player white;
+    private Player black;
     private GridPane gridPane;
     private NetworkConnection networkConnection;
 
     public GridPane getGridPane() {
         return gridPane;
     }
-    public int shift = 0 ;
 
     private Tile[][]tiles;
     private boolean fclick=true;
@@ -33,11 +33,18 @@ public class ChessBoard {
     public void setUpdate(){}
     public void setNetworkConnection(NetworkConnection networkConnection){
         this.networkConnection=networkConnection;
+        if (networkConnection.isServer())
+            gameController=new GameController(this,white);
+        else
+            gameController=new GameController(this,black);
     }
-    Tile tile1=null ;
-    Tile tile2=null ;
+
+    public void setfclick(boolean fclick){
+        this.fclick=fclick;
+    }
     ChessBoard(){
-        gameController=new GameController(this);
+        white = new Player(1,"white");
+        black = new Player(2,"black");
         whitePositions = new HashMap<>();
         blackPositions = new HashMap<>();
         //add tiles
@@ -53,11 +60,11 @@ public class ChessBoard {
                 tile.getPane().setOnMouseClicked(tileListener(tile));
             }
         }
-        Player white = new Player(1,"white");
-        Player black = new Player(2,"black");
+
         //add pieces
         addPieces(white);
         addPieces(black);
+//        gameController.startGame();
     }
     // add all pieces at first
     public void addPieces(Player player){
@@ -101,7 +108,7 @@ public class ChessBoard {
     public EventHandler<? super MouseEvent> tileListener(Tile tile) {
         return event -> {
 
-            if(fclick == true){
+            if(fclick ){
                 fclick=false;
                 firstclick(tile);
             }
@@ -133,9 +140,6 @@ public class ChessBoard {
         if(tile!=start) {
             Piece piece = start.getPiece();
 //            check if move can be done or not
-                shift =( shift %2)+1 ;
-                if (piece.getPlayer().getId() ==shift) {
-                    System.out.println("Now player "+((shift%2)+1));
                     for (Move move : gameController.getMovesForPieceAt(start.getPosition())) {
                         if (move.getDestinationPosition().getCol() == tile.getPosition().getCol()) {
                             if (move.getDestinationPosition().getRaw() == tile.getPosition().getRaw()) {
@@ -148,7 +152,6 @@ public class ChessBoard {
                             fclick = false;
                         }
                     }
-                }else shift =( shift %2)+1 ;
         }else
             flag=true;
         if(flag==true){
@@ -176,7 +179,22 @@ public class ChessBoard {
     public Piece getPieceAt(int col, int row){
         return tiles[col][row].getPiece();
     }
-    public void getUpdate(Move move,Piece piece){}
+    public void getUpdate(String data){
+        System.out.println(data.charAt(0));
+       Position startposition=new Position();
+       startposition.setCol(Character.getNumericValue(data.charAt(0)));
+       startposition.setRaw(Character.getNumericValue(data.charAt(1)));
+        System.out.println(startposition.toString());
+       Position destposition=new Position();
+       destposition.setCol(Character.getNumericValue(data.charAt(2)));
+       destposition.setRaw(Character.getNumericValue(data.charAt(3)));
+        System.out.println(destposition.toString());
+       Move move= new Move(startposition,destposition);
+       MovePiece(getPieceAt(startposition.getCol(),startposition.getRaw()),move);
+    }
+    public void sendupdate(Move move){
+        networkConnection.setdata(move.toString());
+    }
     public void replacePieceAt(Position position, Piece newPiece){
     }
     public ArrayList<Tile>MovesForPiece(){
@@ -210,6 +228,10 @@ public class ChessBoard {
                 blackPositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
             tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
         }
+        System.out.println(move.getDestinationPosition().toString());
+        //System.out.println(move.toString());
+        sendupdate(move);
+        //        gameController.endTurn();
     }
     public void reset(){}
 

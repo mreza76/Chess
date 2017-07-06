@@ -10,10 +10,6 @@ public class Move {
         this.destinationPosition=destinationPosition;
         this.startPosition=startPosition;
     }
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 
     public Position getStartPosition() {
         return startPosition;
@@ -29,6 +25,11 @@ public class Move {
 
     public void setDestinationPosition(Position destinationPosition) {
         this.destinationPosition = destinationPosition;
+    }
+
+    @Override
+    public String toString() {
+        return startPosition.toString() + destinationPosition.toString();
     }
 
     public Move() {

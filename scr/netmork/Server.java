@@ -1,5 +1,7 @@
 package netmork;
 
+import contoroller.ChessBoard;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -26,7 +28,8 @@ public class Server extends NetworkConnection {
         return port;
     }
 
-    public Server(int port) throws IOException {
+    public Server(int port,ChessBoard chessBoard) throws IOException {
+        super(chessBoard);
         this.port=port;
         serverSocket = new ServerSocket(port);
         socket= serverSocket.accept();

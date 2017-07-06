@@ -8,12 +8,15 @@ import java.util.List;
 import java.util.Set;
 
 public class GameController {
+
     private ArrayList<Move> moves=new ArrayList<>();
     private ChessBoard chessBoard;
     private Piece selectedPiece;
     private Player currentPlayer;
-    GameController(ChessBoard chessBoard){
+    GameController(ChessBoard chessBoard,Player player){
         this.chessBoard=chessBoard;
+        currentPlayer=player;
+//        startGame();
     }
     private void Castling(Piece p, Move m){}
     public boolean isInCheck(Player player){
@@ -22,9 +25,20 @@ public class GameController {
     public boolean isGameOver(){
         return false;
     }
-    public void startGame(){}
-    public void beginTurn(){}
-    public void endTurn(){}
+    public void startGame(){
+        if (currentPlayer.getId()==1)
+            beginTurn();
+        else
+            endTurn();
+    }
+    public void beginTurn(){
+        chessBoard.setfclick(true);
+    }
+    public void endTurn(){
+        chessBoard.setfclick(false);
+//        chessBoard.getUpdate();
+        beginTurn();
+    }
     public Piece pawnconvert(Piece piece){
         Position current =piece.getPosition();
         Player tplayer=piece.getPlayer();
