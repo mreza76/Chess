@@ -12,6 +12,16 @@ public class GameController {
     private ArrayList<Move> moves=new ArrayList<>();
     private ChessBoard chessBoard;
     private Piece selectedPiece;
+    private boolean isofline=true;
+
+    public boolean isIsofline() {
+        return isofline;
+    }
+
+    public void setIsofline(boolean isofline) {
+        this.isofline = isofline;
+    }
+
     private Player currentPlayer;
     GameController(ChessBoard chessBoard,Player player){
         this.chessBoard=chessBoard;

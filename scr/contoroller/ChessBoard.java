@@ -17,20 +17,26 @@ public class ChessBoard {
     private Player black;
     private GridPane gridPane;
     private NetworkConnection networkConnection;
-
     public GridPane getGridPane() {
         return gridPane;
     }
-
     private Tile[][]tiles;
     private boolean fclick=true;
+    private boolean offlinemode=false;
     private Tile start;
     private GameController gameController;
     private Map<Piece, Position> whitePositions;
     private Map<Piece, Position> blackPositions;
-    public void FirstClick(Tile tile){}
-    public void ScondClick(Tile tile){}
-    public void setUpdate(){}
+
+    public GameController getGameController() {
+        return gameController;
+    }
+    public void setGameController() {
+        this.gameController = new GameController(this,white);;
+    }
+    public void setMode(boolean OfflineMode){
+        gameController.setIsofline(OfflineMode);
+    }
     public void setNetworkConnection(NetworkConnection networkConnection){
         this.networkConnection=networkConnection;
         if (networkConnection.isServer())
@@ -228,9 +234,9 @@ public class ChessBoard {
                 blackPositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
             tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
         }
-        System.out.println(move.getDestinationPosition().toString());
         //System.out.println(move.toString());
-        sendupdate(move);
+        if(!gameController.isIsofline())
+            sendupdate(move);
         //        gameController.endTurn();
     }
     public void reset(){}

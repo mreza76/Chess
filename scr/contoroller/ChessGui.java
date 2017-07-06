@@ -17,6 +17,7 @@ public class ChessGui extends Application{
     private NetworkConnection networkConnection;
     private ChessBoard chessBoard;
     private Pane root;
+    private boolean offlineMode=false;
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -27,17 +28,30 @@ public class ChessGui extends Application{
         if(a==1){
             networkConnection= new Server(8080,chessBoard);
         }
-        else
+        else if (a==2)
             networkConnection= new Client("127.0.0.1",8080,chessBoard);
-        networkConnection.startConnection();
+        else
+            offlineMode=true;
+        if (!offlineMode)
+            networkConnection.startConnection();
         root.getChildren().add(chessBoard.getGridPane());
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        chessBoard.setNetworkConnection(networkConnection);
-        if(networkConnection.isServer())
-            stage.setTitle("White");
-        else
-            stage.setTitle("Black");
+//        chessBoard.setMode(offlineMode);
+        if (!offlineMode)
+            chessBoard.setNetworkConnection(networkConnection);
+        if (!offlineMode) {
+            if (networkConnection.isServer())
+                stage.setTitle("White");
+            else
+                stage.setTitle("Black");
+        }
+        else {
+            stage.setTitle("offline");
+            chessBoard.setGameController();
+        }
+
+        chessBoard.setMode(offlineMode);
         stage.show();
     }
 }
