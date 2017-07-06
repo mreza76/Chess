@@ -1,5 +1,4 @@
 package contoroller;
-
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -21,6 +20,7 @@ public class ChessBoard {
     public GridPane getGridPane() {
         return gridPane;
     }
+    public int shift = 0 ;
 
     private Tile[][]tiles;
     private boolean fclick=true;
@@ -100,12 +100,14 @@ public class ChessBoard {
     //it will be called every time ,any time mouse clicked
     public EventHandler<? super MouseEvent> tileListener(Tile tile) {
         return event -> {
-            if(fclick){
+
+            if(fclick == true){
                 fclick=false;
                 firstclick(tile);
             }
             else{
                 secondclick(tile);
+
             }
         };
     }
@@ -126,17 +128,22 @@ public class ChessBoard {
         if(tile!=start) {
             Piece piece = start.getPiece();
 //            check if move can be done or not
-            for (Move move : gameController.getMovesForPieceAt(start.getPosition())) {
-                if (move.getDestinationPosition().getCol() == tile.getPosition().getCol()) {
-                    if (move.getDestinationPosition().getRaw() == tile.getPosition().getRaw()) {
-                        MovePiece(piece, move);
-                        flag = true;
-                        break;
+                shift =( shift %2)+1 ;
+                if (piece.getPlayer().getId() ==shift) {
+                    System.out.println("Now player "+((shift%2)+1));
+                    for (Move move : gameController.getMovesForPieceAt(start.getPosition())) {
+                        if (move.getDestinationPosition().getCol() == tile.getPosition().getCol()) {
+                            if (move.getDestinationPosition().getRaw() == tile.getPosition().getRaw()) {
+                                MovePiece(piece, move);
+                                flag = true;
+                                break;
+                            }
+
+                        } else {
+                            fclick = false;
+                        }
                     }
-                }else {
-                    fclick = false;
-                }
-            }
+                }else shift =( shift %2)+1 ;
         }else
             flag=true;
         if(flag==true){
@@ -173,6 +180,7 @@ public class ChessBoard {
     public Tile getTileAt(Position position){
         return tiles[position.getCol()][position.getRaw()];
     }
+
     public void MovePiece(Piece piece,Move move){
         tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
         if(getTileAt(move.getDestinationPosition()).getPiece()!=null){
