@@ -117,6 +117,11 @@ public class ChessBoard {
             start.selected();
             for (Move move : gameController.getMovesForPieceAt(tile.getPosition())) {
                     tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].Highlight();
+                    if(tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].isGotpiece()){
+                        if(tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].getPiece().getPlayer().getId()!=tiles[move.getStartPosition().getCol()][move.getStartPosition().getRaw()].getPiece().getPlayer().getId()){
+                            tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].HighlightAttack();
+                        }
+                    }
             }
         }
         else
