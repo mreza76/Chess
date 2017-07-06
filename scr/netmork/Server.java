@@ -1,6 +1,8 @@
 package netmork;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 
 /**
@@ -11,7 +13,7 @@ public class Server extends NetworkConnection {
     private ServerSocket serverSocket;
     @Override
     public boolean isServer() {
-        return false;
+        return true;
     }
 
     @Override
@@ -21,7 +23,7 @@ public class Server extends NetworkConnection {
 
     @Override
     public int getPort() {
-        return 0;
+        return port;
     }
 
     public Server(int port) throws IOException {
@@ -29,5 +31,7 @@ public class Server extends NetworkConnection {
         serverSocket = new ServerSocket(port);
         socket= serverSocket.accept();
         System.out.println("socket connected");
+        InputStream inputStream  =socket.getInputStream();
+        OutputStream outputStream=socket.getOutputStream();
     }
 }

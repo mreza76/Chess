@@ -192,6 +192,19 @@ public class ChessBoard {
         else
             blackPositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
         tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
+        if (piece instanceof Pawn){
+            piece=gameController.pawnconvert(piece);
+            tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
+            if(getTileAt(move.getDestinationPosition()).getPiece()!=null){
+                removePiece(getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw()));
+            }
+            piece.setPosition(move.getDestinationPosition());
+            if (piece.getPlayer().getId() == 1)
+                whitePositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
+            else
+                blackPositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
+            tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
+        }
     }
     public void reset(){}
 

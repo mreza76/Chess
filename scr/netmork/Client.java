@@ -1,6 +1,8 @@
 package netmork;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 
 /**
@@ -15,6 +17,8 @@ public class Client extends NetworkConnection {
         this.port=port;
         socket=new Socket("127.0.0.1",8080);
         System.out.println("Socket connected");
+        inputStream  =socket.getInputStream();
+        outputStream=socket.getOutputStream();
     }
 
     @Override
@@ -24,11 +28,11 @@ public class Client extends NetworkConnection {
 
     @Override
     public String getIP() {
-        return null;
+        return ip;
     }
 
     @Override
     public int getPort() {
-        return 0;
+        return port;
     }
 }
