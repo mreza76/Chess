@@ -10,6 +10,15 @@ public class Pawn extends Piece {
     Position position=new Position() ;
     Move move=new Move() ;
     PwanAttack pwanAttack=new PwanAttack() ;
+    private boolean end=false ;
+
+    public boolean isEnd() {
+        return end;
+    }
+
+    public void setEnd(boolean end) {
+        this.end = end;
+    }
 
     public Pawn(Player player, Position position) {
         super(player, position);
