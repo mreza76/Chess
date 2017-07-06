@@ -9,7 +9,7 @@ import java.util.Set;
 public class Pawn extends Piece {
     Position position=new Position() ;
     Move move=new Move() ;
-    PwanAttack pwanAttack=new PwanAttack() ;
+    PawnAttack pawnAttack;
     private boolean end=false ;
 
     public boolean isEnd() {
@@ -61,25 +61,26 @@ public class Pawn extends Piece {
         if (getPlayer().getId()==1) {
             if (CurrentPosition.getCol()-1 >= 0 && CurrentPosition.getRaw()-1 >= 0){
             position = new Position(CurrentPosition.getCol()-1, CurrentPosition.getRaw() - 1);
-            pwanAttack = new PwanAttack(CurrentPosition, position);
-            availbaleMoves.add(pwanAttack);
+            pawnAttack = new PawnAttack(CurrentPosition, position);
+            availbaleMoves.add(pawnAttack);
             }
             if (CurrentPosition.getRaw()-1 >= 0 && CurrentPosition.getCol()+1 < 8){
             position = new Position(CurrentPosition.getCol()+1, CurrentPosition.getRaw() - 1);
-            pwanAttack = new PwanAttack(CurrentPosition, position);
-            availbaleMoves.add(pwanAttack);
+            pawnAttack = new PawnAttack(CurrentPosition, position);
+            availbaleMoves.add(pawnAttack);
             }
         }
         else {
             if (CurrentPosition.getCol()+1 < 8 && CurrentPosition.getRaw()+1 < 8){
             position = new Position(CurrentPosition.getCol() + 1, CurrentPosition.getRaw() + 1);
-            pwanAttack = new PwanAttack(CurrentPosition, position);
-            availbaleMoves.add(pwanAttack);
+            pawnAttack = new PawnAttack(CurrentPosition, position);
+
+            availbaleMoves.add(pawnAttack);
             }
             if (CurrentPosition.getRaw()+1 <8 && CurrentPosition.getCol()-1 >= 0) {
                 position = new Position(CurrentPosition.getCol() - 1, CurrentPosition.getRaw() + 1);
-                pwanAttack = new PwanAttack(CurrentPosition, position);
-                availbaleMoves.add(pwanAttack);
+                pawnAttack = new PawnAttack(CurrentPosition, position);
+                availbaleMoves.add(pawnAttack);
             }
         }
         return availbaleMoves ;

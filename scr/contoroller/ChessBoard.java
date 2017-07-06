@@ -142,6 +142,9 @@ public class ChessBoard {
                             tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].HighlightAttack();
                         }
                     }
+                    if(move instanceof PawnAttack){
+                        tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].HighlightAttack();
+                    }
                 }
             }
         }
@@ -223,6 +226,10 @@ public class ChessBoard {
         if(getTileAt(move.getDestinationPosition()).getPiece()!=null){
             removePiece(getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw()));
         }
+        if(move instanceof PawnAttack){
+            if(((PawnAttack) move).isEnPassant())
+                removePiece(getPieceAt(((PawnAttack) move).getEnPassantCapturePosition().getCol(),((PawnAttack) move).getEnPassantCapturePosition().getRaw()));
+        }
         piece.setPosition(move.getDestinationPosition());
         if (piece.getPlayer().getId() == 1)
             whitePositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
@@ -231,11 +238,7 @@ public class ChessBoard {
         tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
         if (piece instanceof Pawn){
             piece=gameController.pawnconvert(piece);
-            tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
-            if(getTileAt(move.getDestinationPosition()).getPiece()!=null){
-                removePiece(getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw()));
-            }
-            piece.setPosition(move.getDestinationPosition());
+
             if (piece.getPlayer().getId() == 1)
                 whitePositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
             else

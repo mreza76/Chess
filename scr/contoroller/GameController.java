@@ -89,6 +89,27 @@ public class GameController {
             }
 
         }
+        if((move instanceof PawnAttack)){
+            if (piecedest==null){
+                if(piecestart.getPlayer().getId()==1)
+                    piecedest=chessBoard.getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw()+1);
+                else
+                    piecedest=chessBoard.getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw()-1);
+                if(piecedest==null)
+                    return false;
+                else if (piecedest.getPlayer().getId()==piecestart.getPlayer().getId())
+                        return false;
+                else {
+                    ((PawnAttack) move).setEnPassant(true);
+                    ((PawnAttack) move).setEnPassantCapturePosition(piecedest.getPosition());
+                }
+            }
+
+        }else if(piecestart instanceof Pawn)
+        {
+            if (piecedest!=null)
+                return false;
+        }
         return true ;
     }
 
