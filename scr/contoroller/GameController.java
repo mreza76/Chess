@@ -37,12 +37,10 @@ public class GameController {
         this.chessBoard=chessBoard;
         currentPlayer=player;
     }
-
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
-    private void Castling(Piece p, Move m){}
     public boolean isInCheck(Player player){
         return false;
     }
@@ -111,6 +109,7 @@ public class GameController {
 
         return true ;
     }
+
     public boolean isjump(Move move){
         int col = move.getDestinationPosition().getCol()-move.getStartPosition().getCol();
         int raw = move.getDestinationPosition().getRaw()-move.getStartPosition().getRaw();
@@ -118,6 +117,9 @@ public class GameController {
         int i= getnum(raw);
         col=move.getStartPosition().getCol()+j;
         raw=move.getStartPosition().getRaw()+i;
+        Piece piece = chessBoard.getPieceAt(col-j,raw-i);
+        if(piece instanceof Knight)
+            return false;
         while ((raw!=move.getDestinationPosition().getRaw())||(col!=move.getDestinationPosition().getCol())){
             if(chessBoard.getPieceAt(col,raw)!=null)
                 return true;
@@ -135,6 +137,14 @@ public class GameController {
         else
             return 0;
     }
+    public boolean ischecks(Move move ){
+        Piece piecedest=chessBoard.getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw());
+        Piece piecestart=chessBoard.getPieceAt(move.getStartPosition().getCol(),move.getStartPosition().getRaw());
+        if(piecedest instanceof  King)
+                return true ;
+        else return false ;
+
+    }
 
     public Set<Move> getMovesForPieceAt(Position position){
         Set<Move> tmps = chessBoard.getPieceAt(position.getCol(),position.getRaw()).GenerateMoves(position);
@@ -142,13 +152,15 @@ public class GameController {
         for (Move tmp : tmps) {
             if(!isjump(tmp))
                 if(pieceCanMove(tmp,currentPlayer)){
-                    correctmoves.add(tmp) ;
+                    if (!ischecks(tmp))
+                        correctmoves.add(tmp) ;
             }
         }
         return correctmoves ;
 
     }
     public void makeMove(Move move){}
+
     public void rollback(){}
 
 

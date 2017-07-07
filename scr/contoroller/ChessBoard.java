@@ -27,6 +27,21 @@ public class ChessBoard {
     private GameController gameController;
     private Map<Piece, Position> whitePositions;
     private Map<Piece, Position> blackPositions;
+
+    public Piece getking(int id){
+        if (id ==1){
+            for (Piece piece : whitePositions.keySet()) {
+                if (piece instanceof King)
+                    return piece;
+            }
+        }
+        else
+            for (Piece piece : blackPositions.keySet()) {
+                if (piece instanceof King)
+                    return piece;
+            }
+        return null;
+    }
     public Player getplayer(int player){
         if (player==1)
             return white;
