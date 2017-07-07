@@ -16,6 +16,7 @@ public class GameController {
     private Player currentPlayer;
 
     public boolean checkTurn(Piece piece){
+
         if(piece.getPlayer().getId()==getCurrentPlayer().getId()){
             if(isofline)
                 return true;
@@ -46,10 +47,7 @@ public class GameController {
     public boolean isGameOver(){
         return false;
     }
-//    public void startGame(){
-//        if (currentPlayer.getId()==1)
-//
-//    }
+
     public void changeTurn(){
         if(isofline) {
             if (currentPlayer.getId() == 1)
@@ -93,7 +91,7 @@ public class GameController {
                     piecedest=chessBoard.getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw()+1);
                 else
                     piecedest=chessBoard.getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw()-1);
-                if(piecedest==null)
+                if(!(piecedest instanceof Pawn))
                     return false;
                 else if (piecedest.getPlayer().getId()==piecestart.getPlayer().getId())
                         return false;
@@ -111,7 +109,76 @@ public class GameController {
 
         return true ;
     }
-
+    public boolean ischeck(Move move){
+        Position destinionposition= move.getDestinationPosition();
+        Position startposition=move.getStartPosition();
+        selectedPiece=chessBoard.getPieceAt(startposition.getCol(),startposition.getRaw());
+        Piece []kings= new King[2];
+        kings[0]=chessBoard.getking(1);
+        kings[1]=chessBoard.getking(2);
+        for(int i=0;i<2;i++){
+            if(destinionposition.getRaw()==kings[i].getPosition().getRaw())
+                if(destinionposition.getCol()==kings[i].getPosition().getCol()) {
+                    System.out.println(111111);
+                    return true;
+                }
+        }
+        if (selectedPiece instanceof King){
+            Position position=move.getDestinationPosition();
+            if(selectedPiece.getPlayer().getId()==1)
+                for (Piece piece : chessBoard.getmap(2)) {
+                    for (Move move1 : piece.GenerateMoves(piece.getPosition())) {
+                        if(move1.getDestinationPosition().getCol()==position.getCol())
+                            if(move1.getDestinationPosition().getRaw()==position.getRaw())
+                                if(!isjump(move1)) {
+                                    System.out.println(222222);
+                                    return true;
+                                }
+                    }
+                }
+            else
+                for (Piece piece : chessBoard.getmap(1)) {
+                    for (Move move1 : piece.GenerateMoves(piece.getPosition())) {
+                        if(move1.getDestinationPosition().getCol()==position.getCol())
+                            if(move1.getDestinationPosition().getRaw()==position.getRaw())
+                                if(!isjump(move1)) {
+                                    System.out.println(333333);
+                                return true;
+                                }
+                    }
+                }
+        }
+        else{
+            chessBoard.replacePieceAt(move.getDestinationPosition(),selectedPiece);
+            if(selectedPiece.getPlayer().getId()==1)
+                for (Piece piece : chessBoard.getmap(2)) {
+                    for (Move move1 : piece.GenerateMoves(piece.getPosition())) {
+                        if(move1.getDestinationPosition().getCol()==kings[0].getPosition().getCol())
+                            if(move1.getDestinationPosition().getRaw()==kings[0].getPosition().getRaw())
+                                if(!isjump(move1)) {
+                                    chessBoard.replacePieceAt(move.getStartPosition(),selectedPiece);
+                                    System.out.println(444444);
+                                    return true;
+                                }
+                    }
+                    chessBoard.replacePieceAt(move.getStartPosition(),selectedPiece);
+                }
+            else
+                for (Piece piece : chessBoard.getmap(1)) {
+                    for (Move move1 : piece.GenerateMoves(piece.getPosition())) {
+                        if(move1.getDestinationPosition().getCol()==kings[1].getPosition().getCol())
+                            if(move1.getDestinationPosition().getRaw()==kings[1].getPosition().getRaw())
+                                if(!isjump(move1)) {
+                                    chessBoard.replacePieceAt(move.getStartPosition(),selectedPiece);
+                                    System.out.println(555555);
+                                    return true;
+                                }
+                    }
+                }
+            chessBoard.replacePieceAt(move.getStartPosition(),selectedPiece);
+        }
+        return false;
+    }
     public boolean isjump(Move move){
         int col = move.getDestinationPosition().getCol()-move.getStartPosition().getCol();
         int raw = move.getDestinationPosition().getRaw()-move.getStartPosition().getRaw();
@@ -153,8 +220,8 @@ public class GameController {
         Set<Move> correctmoves =new HashSet<>() ;
         for (Move tmp : tmps) {
             if(!isjump(tmp))
-                if(pieceCanMove(tmp,currentPlayer)){
-                    if (!ischecks(tmp))
+                if (!ischeck(tmp))
+                    if(pieceCanMove(tmp,currentPlayer)){
                         correctmoves.add(tmp) ;
             }
         }
