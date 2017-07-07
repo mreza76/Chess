@@ -19,4 +19,20 @@ public class Position {
         this.raw = raw;
         this.col = col;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(col) + String.valueOf(raw) ;
+    }
+
+    public void setRaw(int raw) {
+        this.raw = raw;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
+    public Position() {
+    }
 }

@@ -17,8 +17,8 @@ public class King extends Piece {
     {
         Set<Move> availabelMoves = new HashSet<>();
 
-        int y = CurrentPosition.getRaw();
-        int x = CurrentPosition.getCol();
+        int y = CurrentPosition.getCol();
+        int x = CurrentPosition.getRaw();
 
         if (x+1 < 8){
             Position position = new Position(y,x+1);

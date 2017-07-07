@@ -1,5 +1,4 @@
 package contoroller;
-
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -14,28 +13,49 @@ import java.util.Map;
  * Created by amirsaeed on 6/2/2017.
  */
 public class ChessBoard {
-    private Player[] players;
+    private Player white;
+    private Player black;
     private GridPane gridPane;
     private NetworkConnection networkConnection;
-
     public GridPane getGridPane() {
         return gridPane;
     }
-
     private Tile[][]tiles;
     private boolean fclick=true;
+    private boolean offlinemode=false;
     private Tile start;
     private GameController gameController;
     private Map<Piece, Position> whitePositions;
     private Map<Piece, Position> blackPositions;
-    public void FirstClick(Tile tile){}
-    public void ScondClick(Tile tile){}
-    public void setUpdate(){}
+    public Player getplayer(int player){
+        if (player==1)
+            return white;
+        else
+            return black;
+    }
+    public GameController getGameController() {
+        return gameController;
+    }
+    public void setGameController() {
+        this.gameController = new GameController(this,white);
+    }
+    public void setMode(boolean OfflineMode){
+        gameController.setIsofline(OfflineMode);
+    }
     public void setNetworkConnection(NetworkConnection networkConnection){
         this.networkConnection=networkConnection;
+        if (networkConnection.isServer())
+            gameController=new GameController(this,white);
+        else
+            gameController=new GameController(this,black);
+    }
+
+    public void setfclick(boolean fclick){
+        this.fclick=fclick;
     }
     ChessBoard(){
-        gameController=new GameController(this);
+        white = new Player(1,"white");
+        black = new Player(2,"black");
         whitePositions = new HashMap<>();
         blackPositions = new HashMap<>();
         //add tiles
@@ -51,11 +71,11 @@ public class ChessBoard {
                 tile.getPane().setOnMouseClicked(tileListener(tile));
             }
         }
-        Player white = new Player(1,"white");
-        Player black = new Player(2,"black");
+
         //add pieces
         addPieces(white);
         addPieces(black);
+//        gameController.startGame();
     }
     // add all pieces at first
     public void addPieces(Player player){
@@ -98,46 +118,73 @@ public class ChessBoard {
     //it will be called every time ,any time mouse clicked
     public EventHandler<? super MouseEvent> tileListener(Tile tile) {
         return event -> {
-            if(fclick){
+
+            if(fclick ){
                 fclick=false;
                 firstclick(tile);
             }
             else{
-                fclick=true;
                 secondclick(tile);
+
             }
         };
     }
     public void firstclick(Tile tile){
-        if (tile.isGotpiece()){
-            start= tile;
-            start.selected();
-            for (Move move : gameController.getMovesForPieceAt(tile.getPosition())) {
-                try {
-                    tiles[move.getDestinationPosition().getRaw()][move.getDestinationPosition().getCol()].Highlight();
-                }catch (Exception e){}
+        Piece piece=getPieceAt(tile.getPosition().getCol(),tile.getPosition().getRaw());
+        if (gameController.checkTurn(piece)) {
+            if (tile.isGotpiece() && start == null) {
+                start = tile;
+                start.selected();
+                for (Move move : gameController.getMovesForPieceAt(tile.getPosition())) {
+                    tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].Highlight();
+                    if (tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].isGotpiece()) {
+                        if (tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].getPiece().getPlayer().getId() != tiles[move.getStartPosition().getCol()][move.getStartPosition().getRaw()].getPiece().getPlayer().getId()) {
+                            tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].HighlightAttack();
+                        }
+                    }
+                    if(move instanceof PawnAttack){
+                        tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].HighlightAttack();
+                    }
+                }
             }
         }
         else
             fclick= true;
     }
     public void secondclick(Tile tile){
-        if(tile!=start){
-            Piece piece= start.getPiece();
-            tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
-            piece.setPosition(tile.getPosition());
-            placePiece(piece,piece.getPosition());
-        }
-        for (int raw = 0; raw < 8; raw++) {
-            for (int col = 0; col < 8; col++) {
-                tiles[col][raw].unselected();
+//        check if anything has change
+        boolean flag=false;
+        if(tile!=start) {
+            Piece piece = start.getPiece();
+//            check if move can be done or not
+                    for (Move move : gameController.getMovesForPieceAt(start.getPosition())) {
+                        if (move.getDestinationPosition().getCol() == tile.getPosition().getCol()) {
+                            if (move.getDestinationPosition().getRaw() == tile.getPosition().getRaw()) {
+                                MovePiece(piece, move);
+                                flag = true;
+                                break;
+                            }
+
+                        } else {
+                            fclick = false;
+                        }
+                    }
+        }else
+            flag=true;
+        if(flag==true){
+            for (int raw = 0; raw < 8; raw++) {
+                for (int col = 0; col < 8; col++) {
+                    tiles[col][raw].unselected();
+                }
             }
+            start=null;
+            fclick=true;
         }
-        start.unselected();
-        //start.removepieice();
-        start=null;
+
     }
-    public void removePiece(Piece piece){}
+    public void removePiece(Piece piece){
+        tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
+    }
     //place piece in right position
     public void placePiece(Piece piece, Position position){
             if (piece.getPlayer().getId() == 1)
@@ -149,12 +196,59 @@ public class ChessBoard {
     public Piece getPieceAt(int col, int row){
         return tiles[col][row].getPiece();
     }
-    public void getUpdate(Move move,Piece piece){}
-    public void replacePieceAt(Position pos, Piece newPiece){}
+    public void getUpdate(String data){
+        System.out.println(data.charAt(0));
+       Position startposition=new Position();
+       startposition.setCol(Character.getNumericValue(data.charAt(0)));
+       startposition.setRaw(Character.getNumericValue(data.charAt(1)));
+        System.out.println(startposition.toString());
+       Position destposition=new Position();
+       destposition.setCol(Character.getNumericValue(data.charAt(2)));
+       destposition.setRaw(Character.getNumericValue(data.charAt(3)));
+        System.out.println(destposition.toString());
+       Move move= new Move(startposition,destposition);
+       MovePiece(getPieceAt(startposition.getCol(),startposition.getRaw()),move);
+    }
+    public void sendupdate(Move move){
+        networkConnection.setdata(move.toString());
+    }
+    public void replacePieceAt(Position position, Piece newPiece){
+    }
     public ArrayList<Tile>MovesForPiece(){
         return null;
     }
-    public void MovePiece(Piece piece,Move move){}
+    public Tile getTileAt(Position position){
+        return tiles[position.getCol()][position.getRaw()];
+    }
+
+    public void MovePiece(Piece piece,Move move){
+        tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
+        if(getTileAt(move.getDestinationPosition()).getPiece()!=null){
+            removePiece(getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw()));
+        }
+        if(move instanceof PawnAttack){
+            if(((PawnAttack) move).isEnPassant())
+                removePiece(getPieceAt(((PawnAttack) move).getEnPassantCapturePosition().getCol(),((PawnAttack) move).getEnPassantCapturePosition().getRaw()));
+        }
+        piece.setPosition(move.getDestinationPosition());
+        if (piece.getPlayer().getId() == 1)
+            whitePositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
+        else
+            blackPositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
+        tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
+        if (piece instanceof Pawn){
+            piece=gameController.pawnconvert(piece);
+
+            if (piece.getPlayer().getId() == 1)
+                whitePositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
+            else
+                blackPositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
+            tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
+        }
+        gameController.changeTurn();
+        if(!gameController.getIsofline())
+            sendupdate(move);
+    }
     public void reset(){}
 
 }

@@ -2,7 +2,6 @@ package model;
 import javafx.scene.image.Image;
 import java.util.HashSet;
 import java.util.Set;
-
 /**
  * Created by amirsaeed on 6/2/2017.
  */
@@ -11,13 +10,12 @@ public class Knight extends Piece {
         super(player, position);
         setImage("file:scr\\view\\pieces\\knight"+player.getId()+".png");
     }
-
     @Override
     public Set<Move> GenerateMoves(Position CurrentPosition) {
         Set<Move> availabelMoves = new HashSet<>() ;
 
-        int y = CurrentPosition.getRaw();
-        int x = CurrentPosition.getCol() ;
+        int y = CurrentPosition.getCol();
+        int x = CurrentPosition.getRaw();
 
         //...knight can move on eight place...//
 
