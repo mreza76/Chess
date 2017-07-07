@@ -16,6 +16,7 @@ public class GameController {
     private Player currentPlayer;
 
     public boolean checkTurn(Piece piece){
+
         if(piece.getPlayer().getId()==getCurrentPlayer().getId()){
             if(isofline)
                 return true;
@@ -48,10 +49,7 @@ public class GameController {
     public boolean isGameOver(){
         return false;
     }
-//    public void startGame(){
-//        if (currentPlayer.getId()==1)
-//
-//    }
+
     public void changeTurn(){
         if(isofline) {
             if (currentPlayer.getId() == 1)
@@ -95,7 +93,7 @@ public class GameController {
                     piecedest=chessBoard.getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw()+1);
                 else
                     piecedest=chessBoard.getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw()-1);
-                if(piecedest==null)
+                if(!(piecedest instanceof Pawn))
                     return false;
                 else if (piecedest.getPlayer().getId()==piecestart.getPlayer().getId())
                         return false;

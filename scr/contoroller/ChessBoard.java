@@ -130,23 +130,26 @@ public class ChessBoard {
         };
     }
     public void firstclick(Tile tile){
-        Piece piece=getPieceAt(tile.getPosition().getCol(),tile.getPosition().getRaw());
-        if (gameController.checkTurn(piece)) {
-            if (tile.isGotpiece() && start == null) {
-                start = tile;
-                start.selected();
-                for (Move move : gameController.getMovesForPieceAt(tile.getPosition())) {
-                    tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].Highlight();
-                    if (tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].isGotpiece()) {
-                        if (tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].getPiece().getPlayer().getId() != tiles[move.getStartPosition().getCol()][move.getStartPosition().getRaw()].getPiece().getPlayer().getId()) {
+        if(tile.isGotpiece()) {
+            Piece piece = getPieceAt(tile.getPosition().getCol(), tile.getPosition().getRaw());
+            if (gameController.checkTurn(piece)) {
+                if (tile.isGotpiece() && start == null) {
+                    start = tile;
+                    start.selected();
+                    for (Move move : gameController.getMovesForPieceAt(tile.getPosition())) {
+                        tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].Highlight();
+                        if (tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].isGotpiece()) {
+                            if (tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].getPiece().getPlayer().getId() != tiles[move.getStartPosition().getCol()][move.getStartPosition().getRaw()].getPiece().getPlayer().getId()) {
+                                tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].HighlightAttack();
+                            }
+                        }
+                        if (move instanceof PawnAttack) {
                             tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].HighlightAttack();
                         }
                     }
-                    if(move instanceof PawnAttack){
-                        tiles[move.getDestinationPosition().getCol()][move.getDestinationPosition().getRaw()].HighlightAttack();
-                    }
                 }
             }
+            else fclick=true;
         }
         else
             fclick= true;
