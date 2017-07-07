@@ -110,15 +110,41 @@ public class GameController {
             if (piecedest!=null)
                 return false;
         }
+
         return true ;
+    }
+    public boolean isjump(Move move){
+        int col = move.getDestinationPosition().getCol()-move.getStartPosition().getCol();
+        int raw = move.getDestinationPosition().getRaw()-move.getStartPosition().getRaw();
+        int j = getnum(col);
+        int i= getnum(raw);
+        col=move.getStartPosition().getCol()+j;
+        raw=move.getStartPosition().getRaw()+i;
+        while ((raw!=move.getDestinationPosition().getRaw())||(col!=move.getDestinationPosition().getCol())){
+            if(chessBoard.getPieceAt(col,raw)!=null)
+                return true;
+            col+=j;
+            raw+=i;
+
+        }
+        return false;
+    }
+    public int getnum(int num){
+        if (num>0)
+            return 1;
+        else if (num<0)
+            return -1;
+        else
+            return 0;
     }
 
     public Set<Move> getMovesForPieceAt(Position position){
         Set<Move> tmps = chessBoard.getPieceAt(position.getCol(),position.getRaw()).GenerateMoves(position);
         Set<Move> correctmoves =new HashSet<>() ;
         for (Move tmp : tmps) {
-            if(pieceCanMove(tmp,currentPlayer)){
-                correctmoves.add(tmp) ;
+            if(!isjump(tmp))
+                if(pieceCanMove(tmp,currentPlayer)){
+                    correctmoves.add(tmp) ;
             }
         }
         return correctmoves ;
