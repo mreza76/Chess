@@ -8,12 +8,15 @@ import java.util.List;
 import java.util.Set;
 
 public class GameController {
+
     private int turn=1;
     private ArrayList<Move> moves=new ArrayList<>();
     private ChessBoard chessBoard;
     private Piece selectedPiece;
     private boolean isofline=false;
     private Player currentPlayer;
+    public ArrayList<Piece> allpiec = new ArrayList<>();
+    public  boolean []flags1 = new boolean[2] ;
 
     public boolean checkTurn(Piece piece){
 
@@ -25,6 +28,7 @@ public class GameController {
         }
          return false;
     }
+
     public boolean getIsofline() {
         return isofline;
     }
@@ -37,6 +41,7 @@ public class GameController {
         this.chessBoard=chessBoard;
         currentPlayer=player;
     }
+
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
@@ -71,6 +76,7 @@ public class GameController {
                 turn=1;
         }
     }
+
     public Piece pawnconvert(Piece piece){
         Position current =piece.getPosition();
         Player tplayer=piece.getPlayer();
@@ -86,11 +92,27 @@ public class GameController {
         }
         return piece;
     }
+
     public boolean pieceCanMove(Move move){
         Piece piecedest=chessBoard.getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw());
         Piece piecestart=chessBoard.getPieceAt(move.getStartPosition().getCol(),move.getStartPosition().getRaw());
-        if(piecedest!=null) {
+        if(piecedest != null) {
             if (piecedest.getPlayer().getId() == piecestart.getPlayer().getId()) {
+                for (Piece piece : allpiec)
+                {
+                    if (piece == piecedest || piece == piecestart)
+                        return false ;
+                }
+                if (currentPlayer.getId() ==1)
+                {
+                    if (flags1[0]==true)
+                        return false;
+                }
+                if (currentPlayer.getId() == 2)
+                {
+                    if (flags1[1]==true)
+                        return false ;
+                }
                 if(!(move instanceof CastelingMove))
                     return false;
             }
@@ -119,6 +141,7 @@ public class GameController {
 
         return true ;
     }
+
     public boolean checkmove(Piece kings[],Move move){
         Position destinionposition= move.getDestinationPosition();
         Position startposition=move.getStartPosition();
@@ -130,55 +153,36 @@ public class GameController {
         }
         return false;
     }
+
     public boolean ischeck(Move move){
+
         Position destinionposition= move.getDestinationPosition();
         Position startposition=move.getStartPosition();
         selectedPiece=chessBoard.getPieceAt(move.getStartPosition().getCol(),move.getStartPosition().getRaw());
         Piece []kings= new King[2];
         kings[0]=chessBoard.getking(1);
         kings[1]=chessBoard.getking(2);
-//        if(checkmove(kings,move))
-//            return true;
-
-//        chessBoard.replacePieceAt(destinionposition,selectedPiece);
-//        kings[0]=chessBoard.getking(1);
-//        kings[1]=chessBoard.getking(2);
-//        for(int j=1;j<=2;j++) {
-//            for (Piece piece : chessBoard.getmap(j)) {
-////                if (piece != selectedPiece) {
-//                    Position position=piece.getPosition();
-//                    if ((position.getRaw()!= destinionposition.getRaw())||(position.getCol()!= destinionposition.getCol())) {
-//                            for (Move move1 : piece.GenerateMoves(piece.getPosition())) {
-//                                boolean flag =true;
-//                                if (piece instanceof Pawn) {
-//                                    if (!(move1 instanceof PawnAttack))
-//                                        flag = false;
-//                                }
-//                                        if (!isjump(move1)&&flag)
-//                                            if (pieceCanMove(move1))
-//                                                if (checkmove(kings, move1)) {
-//                                                    chessBoard.replacePieceAt(startposition, selectedPiece);
-//                                                    return true;
-//                                        }
-//                            }
-//                        }
-//                //}
-//            }
-//        }
-//        chessBoard.replacePieceAt(startposition,selectedPiece);
-//        return false;
-
-
-
+        Piece rock=null;
 //        check attacking king
         for(int i=0;i<2;i++){
             if(destinionposition.getRaw()==kings[i].getPosition().getRaw())
                 if(destinionposition.getCol()==kings[i].getPosition().getCol()) {
-                    System.out.println(111111);
+                    if (selectedPiece.getPlayer().getId() == 1)
+                        flags1[0]= true ;
+
+                    else
+                        flags1[1]= true ;
+
                     return true;
                 }
         }
-        chessBoard.replacePieceAt(destinionposition,selectedPiece);
+
+            if (move instanceof CastelingMove) {
+                rock=chessBoard.getPieceAt(destinionposition.getCol(), destinionposition.getRaw());
+                chessBoard.replacePieceAt(((CastelingMove) move).getKingposition(), selectedPiece);
+                chessBoard.replacePieceAt(((CastelingMove) move).getRockposition(), rock);
+            } else
+                chessBoard.replacePieceAt(destinionposition, selectedPiece);
         kings[0]=chessBoard.getking(1);
         kings[1]=chessBoard.getking(2);
         if (selectedPiece instanceof King){
@@ -195,8 +199,17 @@ public class GameController {
                                         flag = false;
                                 }
                                 if (!isjump(move1)&&flag) {
-                                    chessBoard.replacePieceAt(move.getStartPosition(), selectedPiece);
+                                    if (move instanceof CastelingMove) {
+                                        chessBoard.replacePieceAt(move.getStartPosition(), selectedPiece);
+                                        chessBoard.replacePieceAt(move.getDestinationPosition(), rock);
+                                    } else
+                                        chessBoard.replacePieceAt(startposition, selectedPiece);
                                     System.out.println(222222);
+                                    if (selectedPiece.getPlayer().getId() == 1)
+                                        flags1[0]= true ;
+
+                                    else
+                                        flags1[1]= true ;
                                     return true;
                                 }
                             }
@@ -208,8 +221,17 @@ public class GameController {
                         if(move1.getDestinationPosition().getCol()==position.getCol())
                             if(move1.getDestinationPosition().getRaw()==position.getRaw())
                                 if(!isjump(move1)) {
-                                    chessBoard.replacePieceAt(move.getStartPosition(),selectedPiece);
+                                    if (move instanceof CastelingMove) {
+                                        chessBoard.replacePieceAt(move.getStartPosition(), selectedPiece);
+                                        chessBoard.replacePieceAt(move.getDestinationPosition(), rock);
+                                    } else
+                                        chessBoard.replacePieceAt(startposition, selectedPiece);
                                     System.out.println(333333);
+                                    if (selectedPiece.getPlayer().getId() == 1)
+                                        flags1[0]= true ;
+
+                                    else
+                                        flags1[1]= true ;
                                     return true;
                                 }
                     }
@@ -231,8 +253,17 @@ public class GameController {
                                     if(!isjump(move1)&&flag) {
                                         if (move1.getStartPosition().getCol() != move.getDestinationPosition().getCol() || move1.getStartPosition().getRaw() != move.getDestinationPosition().getRaw()) {
 //                                            if () {
-                                            chessBoard.replacePieceAt(move.getStartPosition(), selectedPiece);
+                                            if (move instanceof CastelingMove) {
+                                                chessBoard.replacePieceAt(move.getStartPosition(), selectedPiece);
+                                                chessBoard.replacePieceAt(move.getDestinationPosition(), rock);
+                                            } else
+                                                chessBoard.replacePieceAt(startposition, selectedPiece);
                                             System.out.println(444444);
+                                            if (selectedPiece.getPlayer().getId() == 1)
+                                                flags1[0]= true ;
+
+                                            else
+                                                flags1[1]= true ;
                                             return true;
                                         }
 //                                        }
@@ -254,8 +285,17 @@ public class GameController {
                                 if(!isjump(move1)&&flag) {
                                     if (move1.getStartPosition().getCol() != move.getDestinationPosition().getCol() || move1.getStartPosition().getRaw() != move.getDestinationPosition().getRaw()) {
 //                                        if (move1.getStartPosition().getRaw()!=move.getDestinationPosition().getRaw()) {
-                                        chessBoard.replacePieceAt(move.getStartPosition(), selectedPiece);
+                                        if (move instanceof CastelingMove) {
+                                            chessBoard.replacePieceAt(move.getStartPosition(), selectedPiece);
+                                            chessBoard.replacePieceAt(move.getDestinationPosition(), rock);
+                                        } else
+                                            chessBoard.replacePieceAt(startposition, selectedPiece);
                                         System.out.println(5555555);
+                                        if (selectedPiece.getPlayer().getId() == 1)
+                                            flags1[0]= true ;
+
+                                        else
+                                            flags1[1]= true ;
                                         return true;
                                     }
                                 }
@@ -265,10 +305,16 @@ public class GameController {
                 }
 //            chessBoard.replacePieceAt(move.getStartPosition(),selectedPiece);
         }
-        chessBoard.replacePieceAt(move.getStartPosition(),selectedPiece);
+        if (move instanceof CastelingMove) {
+            chessBoard.replacePieceAt(move.getStartPosition(), selectedPiece);
+            chessBoard.replacePieceAt(move.getDestinationPosition(), rock);
+        } else
+            chessBoard.replacePieceAt(startposition, selectedPiece);
         return false;
     }
+
     public boolean isjump(Move move){
+
         int col = move.getDestinationPosition().getCol()-move.getStartPosition().getCol();
         int raw = move.getDestinationPosition().getRaw()-move.getStartPosition().getRaw();
         int j = getnum(col);
@@ -285,8 +331,10 @@ public class GameController {
             raw+=i;
 
         }
+
         return false;
     }
+
     public int getnum(int num){
         if (num>0)
             return 1;
@@ -312,7 +360,6 @@ public class GameController {
     public void makeMove(Move move){}
 
     public void rollback(){}
-
-
+    public void castling(){};
 
 }

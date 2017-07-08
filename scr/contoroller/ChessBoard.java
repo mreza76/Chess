@@ -50,6 +50,7 @@ public class ChessBoard {
         else
             return black;
     }
+
     public GameController getGameController() {
         return gameController;
     }
@@ -208,7 +209,7 @@ public class ChessBoard {
             whitePositions.remove(piece,piece.getPosition());
         else
             blackPositions.remove(piece,piece.getPosition());
-        piece.setPosition(null);
+//        piece.setPosition(null);
     }
     //place piece in right position
     public void placePiece(Piece piece, Position position){
@@ -272,29 +273,57 @@ public class ChessBoard {
     }
 
     public void MovePiece(Piece piece,Move move){
-        tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
-        if(getTileAt(move.getDestinationPosition()).getPiece()!=null){
-            removePiece(getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw()));
-        }
-        if(move instanceof PawnAttack){
-            if(((PawnAttack) move).isEnPassant())
-                removePiece(getPieceAt(((PawnAttack) move).getEnPassantCapturePosition().getCol(),((PawnAttack) move).getEnPassantCapturePosition().getRaw()));
-        }
-        piece.setPosition(move.getDestinationPosition());
-        if (piece.getPlayer().getId() == 1)
-            whitePositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
-        else
-            blackPositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
-        tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
-        if (piece instanceof Pawn){
-            piece=gameController.pawnconvert(piece);
+        if (piece instanceof  Rock)
+            gameController.allpiec.add(piece);
 
+        if (piece instanceof  King)
+            gameController.allpiec.add(piece);
+
+        if(!(move instanceof CastelingMove)) {
+            tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
+            if (getTileAt(move.getDestinationPosition()).getPiece() != null) {
+                removePiece(getPieceAt(move.getDestinationPosition().getCol(), move.getDestinationPosition().getRaw()));
+            }
+            if (move instanceof PawnAttack) {
+                if (((PawnAttack) move).isEnPassant())
+                    removePiece(getPieceAt(((PawnAttack) move).getEnPassantCapturePosition().getCol(), ((PawnAttack) move).getEnPassantCapturePosition().getRaw()));
+            }
+            piece.setPosition(move.getDestinationPosition());
             if (piece.getPlayer().getId() == 1)
-                whitePositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
+                whitePositions.replace(piece, move.getStartPosition(), move.getDestinationPosition());
             else
-                blackPositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
+                blackPositions.replace(piece, move.getStartPosition(), move.getDestinationPosition());
             tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
+            if (piece instanceof Pawn) {
+                piece = gameController.pawnconvert(piece);
 
+                if (piece.getPlayer().getId() == 1)
+                    whitePositions.replace(piece, move.getStartPosition(), move.getDestinationPosition());
+                else
+                    blackPositions.replace(piece, move.getStartPosition(), move.getDestinationPosition());
+                tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
+
+            }
+        }else{
+            Piece piece1=getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw());
+            if (piece.getPlayer().getId() == 1) {
+                tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
+                tiles[piece1.getPosition().getCol()][piece1.getPosition().getRaw()].removepieice();
+                whitePositions.replace(piece, ((CastelingMove) move).getKingposition(), move.getStartPosition());
+                whitePositions.replace(piece1, ((CastelingMove) move).getRockposition(), move.getDestinationPosition());
+                piece.setPosition(((CastelingMove) move).getKingposition());
+                piece1.setPosition(((CastelingMove) move).getRockposition());
+            }
+            else {
+                tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
+                tiles[piece1.getPosition().getCol()][piece1.getPosition().getRaw()].removepieice();
+                blackPositions.replace(piece, ((CastelingMove) move).getKingposition(), move.getStartPosition());
+                blackPositions.replace(piece1, ((CastelingMove) move).getRockposition(), move.getDestinationPosition());
+                piece.setPosition(((CastelingMove) move).getKingposition());
+                piece1.setPosition(((CastelingMove) move).getRockposition());
+            }
+            tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
+            tiles[piece1.getPosition().getCol()][piece1.getPosition().getRaw()].setPiece(piece1);
         }
         gameController.changeTurn();
         if(!gameController.getIsofline())
