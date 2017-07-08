@@ -8,6 +8,7 @@ import netmork.NetworkConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by amirsaeed on 6/2/2017.
@@ -17,6 +18,7 @@ public class ChessBoard {
     private Player black;
     private GridPane gridPane;
     private NetworkConnection networkConnection;
+
     public GridPane getGridPane() {
         return gridPane;
     }
@@ -211,8 +213,19 @@ public class ChessBoard {
                 blackPositions.put(piece, position);
         tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
     }
-    public Piece getPieceAt(int col, int row){
-        return tiles[col][row].getPiece();
+    public Piece getPieceAt(int col, int raw){
+
+        for (Piece piece : whitePositions.keySet()) {
+            if (piece.getPosition().getRaw()==raw)
+                if (piece.getPosition().getCol()==col)
+                    return piece;
+        }
+        for (Piece piece : blackPositions.keySet()) {
+            if (piece.getPosition().getRaw()==raw)
+                if (piece.getPosition().getCol()==col)
+                    return piece;
+        }
+        return null;
     }
     public void getUpdate(String data){
         System.out.println(data.charAt(0));
@@ -230,7 +243,13 @@ public class ChessBoard {
     public void sendupdate(Move move){
         networkConnection.setdata(move.toString());
     }
-    public void replacePieceAt(Position position, Piece newPiece){
+    public void replacePieceAt(Position position, Piece piece){
+        if (piece.getPlayer().getId() == 1)
+            whitePositions.replace(piece, piece.getPosition(),position);
+        else
+            blackPositions.replace(piece, piece.getPosition(),position);
+        piece.setPosition(position);
+//        tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
     }
     public ArrayList<Tile>MovesForPiece(){
         return null;
@@ -262,11 +281,20 @@ public class ChessBoard {
             else
                 blackPositions.replace(piece, move.getStartPosition(),move.getDestinationPosition());
             tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
+
         }
         gameController.changeTurn();
         if(!gameController.getIsofline())
             sendupdate(move);
     }
+
+    public Set<Piece> getmap(int id) {
+        if(id==1)
+        return whitePositions.keySet();
+        else
+            return blackPositions.keySet();
+    }
+
     public void reset(){}
 
 }
