@@ -111,7 +111,7 @@ public class ChessBoard {
         else
             raw=0;
         //add kings
-        Position position = new Position(3,raw);
+        Position position = new Position(4,raw);
         placePiece(new King(player,position),position);
         //add rocks
         position= new Position(0,raw);
@@ -129,7 +129,7 @@ public class ChessBoard {
         position = new Position(5,raw);
         placePiece(new Bishop(player,position),position);
         //add queens
-        position = new Position(4,raw);
+        position = new Position(3,raw);
         placePiece(new Queen(player,position),position);
     }
     //it will be called every time ,any time mouse clicked
@@ -204,6 +204,11 @@ public class ChessBoard {
     }
     public void removePiece(Piece piece){
         tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].removepieice();
+        if(piece.getPlayer().getId()==1)
+            whitePositions.remove(piece,piece.getPosition());
+        else
+            blackPositions.remove(piece,piece.getPosition());
+        piece.setPosition(null);
     }
     //place piece in right position
     public void placePiece(Piece piece, Position position){
@@ -214,17 +219,25 @@ public class ChessBoard {
         tiles[piece.getPosition().getCol()][piece.getPosition().getRaw()].setPiece(piece);
     }
     public Piece getPieceAt(int col, int raw){
-
+//            return tiles[col][raw].getPiece();
+        int a=0;
+        Piece piece1=null;
         for (Piece piece : whitePositions.keySet()) {
             if (piece.getPosition().getRaw()==raw)
-                if (piece.getPosition().getCol()==col)
-                    return piece;
+                if (piece.getPosition().getCol()==col) {
+                    a++;
+                    piece1=piece;
+                }
         }
         for (Piece piece : blackPositions.keySet()) {
             if (piece.getPosition().getRaw()==raw)
-                if (piece.getPosition().getCol()==col)
-                    return piece;
+                if (piece.getPosition().getCol()==col) {
+                    a++;
+                    piece1=piece;
+                }
         }
+        if (a==1)
+            return piece1;
         return null;
     }
     public void getUpdate(String data){
@@ -286,11 +299,13 @@ public class ChessBoard {
         gameController.changeTurn();
         if(!gameController.getIsofline())
             sendupdate(move);
+        if(gameController.isGameOver())
+            System.out.println("youuuuuu loseeeer");
     }
 
     public Set<Piece> getmap(int id) {
         if(id==1)
-        return whitePositions.keySet();
+            return whitePositions.keySet();
         else
             return blackPositions.keySet();
     }

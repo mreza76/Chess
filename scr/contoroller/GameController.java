@@ -45,7 +45,17 @@ public class GameController {
         return false;
     }
     public boolean isGameOver(){
-        return false;
+        if(isofline)
+            for (Piece piece : chessBoard.getmap(currentPlayer.getId())) {
+                if (!getMovesForPieceAt(piece.getPosition()).isEmpty()) {
+                    return false;
+                }
+            }
+        else
+            for (Piece piece : chessBoard.getmap(turn))
+                if (!getMovesForPieceAt(piece.getPosition()).isEmpty())
+                    return false;
+        return true;
     }
 
     public void changeTurn(){
@@ -76,14 +86,14 @@ public class GameController {
         }
         return piece;
     }
-    public boolean pieceCanMove(Move move, Player movingPlayer){
+    public boolean pieceCanMove(Move move){
         Piece piecedest=chessBoard.getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw());
         Piece piecestart=chessBoard.getPieceAt(move.getStartPosition().getCol(),move.getStartPosition().getRaw());
         if(piecedest!=null) {
             if (piecedest.getPlayer().getId() == piecestart.getPlayer().getId()) {
-                return false;
+                if(!(move instanceof CastelingMove))
+                    return false;
             }
-
         }
         if((move instanceof PawnAttack)){
             if (piecedest==null){
@@ -109,13 +119,58 @@ public class GameController {
 
         return true ;
     }
+    public boolean checkmove(Piece kings[],Move move){
+        Position destinionposition= move.getDestinationPosition();
+        Position startposition=move.getStartPosition();
+        for(int i=0;i<2;i++){
+            if(destinionposition.getRaw()==kings[i].getPosition().getRaw())
+                if(destinionposition.getCol()==kings[i].getPosition().getCol()) {
+                    return true;
+                }
+        }
+        return false;
+    }
     public boolean ischeck(Move move){
         Position destinionposition= move.getDestinationPosition();
         Position startposition=move.getStartPosition();
-        selectedPiece=chessBoard.getPieceAt(startposition.getCol(),startposition.getRaw());
+        selectedPiece=chessBoard.getPieceAt(move.getStartPosition().getCol(),move.getStartPosition().getRaw());
         Piece []kings= new King[2];
         kings[0]=chessBoard.getking(1);
         kings[1]=chessBoard.getking(2);
+//        if(checkmove(kings,move))
+//            return true;
+
+//        chessBoard.replacePieceAt(destinionposition,selectedPiece);
+//        kings[0]=chessBoard.getking(1);
+//        kings[1]=chessBoard.getking(2);
+//        for(int j=1;j<=2;j++) {
+//            for (Piece piece : chessBoard.getmap(j)) {
+////                if (piece != selectedPiece) {
+//                    Position position=piece.getPosition();
+//                    if ((position.getRaw()!= destinionposition.getRaw())||(position.getCol()!= destinionposition.getCol())) {
+//                            for (Move move1 : piece.GenerateMoves(piece.getPosition())) {
+//                                boolean flag =true;
+//                                if (piece instanceof Pawn) {
+//                                    if (!(move1 instanceof PawnAttack))
+//                                        flag = false;
+//                                }
+//                                        if (!isjump(move1)&&flag)
+//                                            if (pieceCanMove(move1))
+//                                                if (checkmove(kings, move1)) {
+//                                                    chessBoard.replacePieceAt(startposition, selectedPiece);
+//                                                    return true;
+//                                        }
+//                            }
+//                        }
+//                //}
+//            }
+//        }
+//        chessBoard.replacePieceAt(startposition,selectedPiece);
+//        return false;
+
+
+
+//        check attacking king
         for(int i=0;i<2;i++){
             if(destinionposition.getRaw()==kings[i].getPosition().getRaw())
                 if(destinionposition.getCol()==kings[i].getPosition().getCol()) {
@@ -123,17 +178,28 @@ public class GameController {
                     return true;
                 }
         }
+        chessBoard.replacePieceAt(destinionposition,selectedPiece);
+        kings[0]=chessBoard.getking(1);
+        kings[1]=chessBoard.getking(2);
         if (selectedPiece instanceof King){
             Position position=move.getDestinationPosition();
+//            chessBoard.replacePieceAt(move.getDestinationPosition(),selectedPiece);
             if(selectedPiece.getPlayer().getId()==1)
                 for (Piece piece : chessBoard.getmap(2)) {
                     for (Move move1 : piece.GenerateMoves(piece.getPosition())) {
                         if(move1.getDestinationPosition().getCol()==position.getCol())
-                            if(move1.getDestinationPosition().getRaw()==position.getRaw())
-                                if(!isjump(move1)) {
+                            if(move1.getDestinationPosition().getRaw()==position.getRaw()) {
+                                boolean flag =true;
+                                if (piece instanceof Pawn) {
+                                    if (!(move1 instanceof PawnAttack))
+                                        flag = false;
+                                }
+                                if (!isjump(move1)&&flag) {
+                                    chessBoard.replacePieceAt(move.getStartPosition(), selectedPiece);
                                     System.out.println(222222);
                                     return true;
                                 }
+                            }
                     }
                 }
             else
@@ -142,41 +208,64 @@ public class GameController {
                         if(move1.getDestinationPosition().getCol()==position.getCol())
                             if(move1.getDestinationPosition().getRaw()==position.getRaw())
                                 if(!isjump(move1)) {
+                                    chessBoard.replacePieceAt(move.getStartPosition(),selectedPiece);
                                     System.out.println(333333);
-                                return true;
+                                    return true;
                                 }
                     }
                 }
         }
         else{
-            chessBoard.replacePieceAt(move.getDestinationPosition(),selectedPiece);
+//            chessBoard.replacePieceAt(move.getDestinationPosition(),selectedPiece);
             if(selectedPiece.getPlayer().getId()==1)
                 for (Piece piece : chessBoard.getmap(2)) {
                     for (Move move1 : piece.GenerateMoves(piece.getPosition())) {
                         if(move1.getDestinationPosition().getCol()==kings[0].getPosition().getCol())
                             if(move1.getDestinationPosition().getRaw()==kings[0].getPosition().getRaw())
-                                if(!isjump(move1)) {
-                                    chessBoard.replacePieceAt(move.getStartPosition(),selectedPiece);
-                                    System.out.println(444444);
-                                    return true;
+                                if (pieceCanMove(move1)){
+                                    boolean flag =true;
+                                    if (piece instanceof Pawn) {
+                                        if (!(move1 instanceof PawnAttack))
+                                            flag = false;
+                                    }
+                                    if(!isjump(move1)&&flag) {
+                                        if (move1.getStartPosition().getCol() != move.getDestinationPosition().getCol() || move1.getStartPosition().getRaw() != move.getDestinationPosition().getRaw()) {
+//                                            if () {
+                                            chessBoard.replacePieceAt(move.getStartPosition(), selectedPiece);
+                                            System.out.println(444444);
+                                            return true;
+                                        }
+//                                        }
+                                    }
                                 }
                     }
-                    chessBoard.replacePieceAt(move.getStartPosition(),selectedPiece);
+//                    chessBoard.replacePieceAt(move.getStartPosition(),selectedPiece);
                 }
             else
                 for (Piece piece : chessBoard.getmap(1)) {
                     for (Move move1 : piece.GenerateMoves(piece.getPosition())) {
                         if(move1.getDestinationPosition().getCol()==kings[1].getPosition().getCol())
-                            if(move1.getDestinationPosition().getRaw()==kings[1].getPosition().getRaw())
-                                if(!isjump(move1)) {
-                                    chessBoard.replacePieceAt(move.getStartPosition(),selectedPiece);
-                                    System.out.println(555555);
-                                    return true;
+                            if(move1.getDestinationPosition().getRaw()==kings[1].getPosition().getRaw()){
+                                boolean flag =true;
+                                    if (piece instanceof Pawn) {
+                                        if (!(move1 instanceof PawnAttack))
+                                            flag = false;
+                                    }
+                                if(!isjump(move1)&&flag) {
+                                    if (move1.getStartPosition().getCol() != move.getDestinationPosition().getCol() || move1.getStartPosition().getRaw() != move.getDestinationPosition().getRaw()) {
+//                                        if (move1.getStartPosition().getRaw()!=move.getDestinationPosition().getRaw()) {
+                                        chessBoard.replacePieceAt(move.getStartPosition(), selectedPiece);
+                                        System.out.println(5555555);
+                                        return true;
+                                    }
+                                }
+//                                        }
                                 }
                     }
                 }
-            chessBoard.replacePieceAt(move.getStartPosition(),selectedPiece);
+//            chessBoard.replacePieceAt(move.getStartPosition(),selectedPiece);
         }
+        chessBoard.replacePieceAt(move.getStartPosition(),selectedPiece);
         return false;
     }
     public boolean isjump(Move move){
@@ -206,14 +295,6 @@ public class GameController {
         else
             return 0;
     }
-    public boolean ischecks(Move move ){
-        Piece piecedest=chessBoard.getPieceAt(move.getDestinationPosition().getCol(),move.getDestinationPosition().getRaw());
-        Piece piecestart=chessBoard.getPieceAt(move.getStartPosition().getCol(),move.getStartPosition().getRaw());
-        if(piecedest instanceof  King)
-                return true ;
-        else return false ;
-
-    }
 
     public Set<Move> getMovesForPieceAt(Position position){
         Set<Move> tmps = chessBoard.getPieceAt(position.getCol(),position.getRaw()).GenerateMoves(position);
@@ -221,7 +302,7 @@ public class GameController {
         for (Move tmp : tmps) {
             if(!isjump(tmp))
                 if (!ischeck(tmp))
-                    if(pieceCanMove(tmp,currentPlayer)){
+                    if(pieceCanMove(tmp)){
                         correctmoves.add(tmp) ;
             }
         }

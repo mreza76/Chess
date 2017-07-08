@@ -32,6 +32,7 @@ public class Tile {
         background=new Background(new BackgroundFill(Color.CORNFLOWERBLUE,  new CornerRadii(0), new Insets(0)));
         pane.setBackground(background);
     }
+
     public void HighlightAttack(){
         background=new Background(new BackgroundFill(Color.RED,  new CornerRadii(0), new Insets(0)));
         pane.setBackground(background);
@@ -45,7 +46,7 @@ public class Tile {
         int raw = position.getRaw();
         int col = position.getCol();
         //set color
-        if ((raw+col)%2==1){
+        if ((raw+col)%2==0){
             color=Color.MOCCASIN;
         }
         else{

@@ -19,7 +19,22 @@ public class King extends Piece {
 
         int y = CurrentPosition.getCol();
         int x = CurrentPosition.getRaw();
-
+        if((getPlayer().getId()==1&&y==4&&x==7)||(getPlayer().getId()==2&&y==4&&x==0)){
+            Position position = new Position(y-4,x);
+            Move move = new CastelingMove(CurrentPosition,position);
+            position = new Position(y-2,x);
+            ((CastelingMove)move).setKingposition(position);
+            position = new Position(y-1,x);
+            ((CastelingMove)move).setRockposition(position);
+            availabelMoves.add(move);
+            position = new Position(y+4,x);
+            move = new CastelingMove(CurrentPosition,position);
+            position = new Position(y+2,x);
+            ((CastelingMove)move).setKingposition(position);
+            position = new Position(y+1,x);
+            ((CastelingMove)move).setRockposition(position);
+            availabelMoves.add(move);
+        }
         if (x+1 < 8){
             Position position = new Position(y,x+1);
             Move move = new Move(CurrentPosition,position);

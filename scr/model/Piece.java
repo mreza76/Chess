@@ -39,12 +39,4 @@ public abstract class Piece {
         this.image = new Image(path,100,100,false,false);
     }
     public abstract Set<Move>GenerateMoves(Position CurrentPosition);
-
-    @Override
-    public String toString() {
-        return "Piece{" +
-                "player=" + player.getName() +
-                ", position=" + position +
-                '}';
-    }
 }
